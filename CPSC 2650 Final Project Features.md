@@ -1,0 +1,17 @@
+CPSC 2650 Final Project Features
+- One user who can post announcements
+- One user who can subscribe to specific topics
+    - Subscribe to RSS feeds and remove followed topics 
+- General user who can just view posts 
+- Web API requirement: Use weather API for Vancouver or user location
+- Get important dates from Langara site
+    - Have a ticker underneath the header and nav showing dates
+- Like / view counter
+- Share using third party social media sites 
+    - IF IT'S FREE
+- Langara staff are @langara.ca and students are @mylangara.ca
+    - This way, we can moderate who gets what type of account
+    - Add google sign in if time
+- Footer
+    - Copyright info
+    - Link to Github
