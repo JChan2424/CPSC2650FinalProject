@@ -1,4 +1,4 @@
-CPSC 2650 Final Project Features
+# CPSC 2650 Final Project Features
 - One user who can post announcements
 - One user who can subscribe to specific topics
     - Subscribe to RSS feeds and remove followed topics 
