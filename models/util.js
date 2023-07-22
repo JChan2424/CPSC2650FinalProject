@@ -8,8 +8,9 @@
     //-------------------------------------------------------------------------
     //----------------------------------------------------------------
     //let uri = 
-    const getMongoClient = (local = true) => {
+    const getMongoClient = (local = false) => {
         let uri = `mongodb+srv://${connection.USERNAME}:${connection.PASSOWRD}@${connection.SERVER}/${connection.DATABASE}?retryWrites=true&w=majority`
+        //uri = "mongodb+srv://2650_FinalProj_User:1234@myfirstcluster.c8cef9g.mongodb.net/2650_FinalProject?retryWrites=true&w=majority";
         if (local) {
             uri = `mongodb://127.0.0.1:27017/${connection.DATABASE}`
         }
