@@ -14,11 +14,14 @@
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.4"
   },
-  "devDependencies": {},
   "keywords": [
     "full",
     "stack",
     "web",
     "development"
-  ]
+  ],
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
 }
