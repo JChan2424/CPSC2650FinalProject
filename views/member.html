@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+  <div class="container">
+    <header id="header">
+
+    </header>
+    <hr />
+    <main role="main">
+
+      <div class="row">
+        <div class="col-md-2 card mb-3"></div>
+      
+      <div class="col-md-8 card mb-3">
+        <div class="card-header bg-primary text-white text-center">Weather Information</div>
+        <div class="card-body" id="info">
+         <table class="table table-striped table-bordered table-hover">
+                    <tbody class="text-center h4">
+            <tr>
+              <th>City/Town</th><td id="city" class="btn btn-outline-primary">?</td>
+            </tr>
+            <tr >
+              <th>Geolocation</th><td class="btn btn-outline-success">(<span id="lat" title="latitude">? &nbsp;,&nbsp; ?</span><span id="lon" title="Longitude"></span>)</td>
+            </tr>
+            <tr >
+              <th>Temperature</th><td id="temp" class="btn btn-outline-warning"> ?<kbd>°C</kbd></td>
+            </tr>
+            <tr >
+              <th>Temperature Range</th><td class="btn btn-outline-warning">(<span id="min" title="Minimum Temperature">?&nbsp;,&nbsp;</span><span id="max" title="Maximum Temperature"></span>?)</td>
+            </tr>
+            <tr >
+              <th>Feels Like</th><td id="feels" class="btn btn-outline-light">?</td>
+            </tr>
+            <tr >
+              <th>Description</th><td id="description" class="btn btn-outline-info">?</td>
+            </tr>
+          </tbody>
+         
+         </table>
+         <div class="card-footer text-center">
+          <div class="btn-group" role="group" aria-label="Member Page">
+            <button class="btn btn-danger" id="getInfo">Get Weather Information</button>
+            <a class="btn btn-warning" href="/posts.html">View Posts</a>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="col-md-2 card mb-3"></div>
+    </div>
+      <br />
+     
+  <div id="footer">
+
+  </div>
+  </div>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/partials.js"></script>
+  <script src="js/member.js"></script>
+
+
+</body>
+
+</html>
