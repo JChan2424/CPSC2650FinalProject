@@ -1,6 +1,5 @@
 // Imports
 const util = require("../models/util.js");
-const config = require("../server/config/config");
 const Announcement = require("../models/announcement");
 const client = util.getMongoClient();
 const express = require("express");
@@ -111,3 +110,5 @@ announcementController.delete(
     res.status(200).json(result);
   }
 );
+
+module.exports = announcementController;

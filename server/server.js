@@ -16,7 +16,7 @@ const MongoClient = require("mongodb").MongoClient
 const config = require("./config/config")
 const util = require('../models/util.js')
 const homeController = require('../controllers/homeController')
-const memberController = require('../controllers/memberController')
+const announcementController = require('../controllers/announcementController')
 
 //----------------------------------------------------------------
 
@@ -31,7 +31,7 @@ server.use(express.static(config.ROOT))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(homeController)
-server.use(memberController)
+server.use(announcementController)
 server.get('/logs', async (req, res, next) => {
   util.logRequest(req,res,next)
 })
