@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 
 function Protected() {
+  
   useEffect(() => {
     // check if credentials are in local storage
 
-    if (localStorage.getItem("credentials") === null) {
+    if (localStorage.getItem("token") === null) {
       // if not, redirect to login page
       window.location.href = "/login?redirect=" + window.location.pathname;
     }
@@ -13,13 +14,16 @@ function Protected() {
     fetch("/auth", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(localStorage.getItem("credentials")),
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      }
     }).then((res) => {
       // if not, redirect to login page
       if (res.status === 401) {
         window.location.href = "/login";
+      }
+
+      if (res.status === 200) {
+        // if so, do nothing
       }
 
       // if so, do nothing
