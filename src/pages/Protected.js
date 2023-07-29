@@ -11,7 +11,7 @@ function Protected() {
     }
 
     // if so, send credentials to server to check if they are valid
-    fetch("/auth", {
+    fetch("/api/annoucen", {
       method: "GET",
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
@@ -24,6 +24,7 @@ function Protected() {
 
       if (res.status === 200) {
         // if so, do nothing
+        
       }
 
       // if so, do nothing
@@ -33,6 +34,19 @@ function Protected() {
   return (
     <div>
       <h1>Secret</h1>
+      { if topics.length == 0 || null {
+        <h1>There are no announcements</h1>
+      } : {
+        topics.map((topic) => {
+          return (
+            <div>
+              <h1>{topic.title}</h1>
+              <p>{topic.content}</p>
+            </div>
+          );
+        } 
+      }
+      }
     </div>
   );
 }
