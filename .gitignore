@@ -137,5 +137,5 @@ dist
 ./models/config
 
 #webpack bundles
-.views/bundle.js
-.views/bundle.js.map
+views/bundle.js
+views/bundle.js.map
