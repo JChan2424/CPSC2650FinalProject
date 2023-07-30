@@ -1,10 +1,10 @@
 function User(username, password, firstName, lastName, role) {
     return {
-        Username: username,
-        Password: password,
-        FirstName: firstName,
-        LastName: lastName,
-        Role: role,
+        username: username,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        role: role,
     }
 }
 module.exports = User

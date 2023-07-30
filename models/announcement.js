@@ -1,9 +1,9 @@
 function Annoucement(title, message, topic, author) {
     return {
-        Title: title,
-        Message: message,
-        Topic: topic,
-        Author: author,
+        title: title,
+        message: message,
+        topic: topic,
+        author: author,
         createdAt: new Date().toUTCString(),
     }
 }
