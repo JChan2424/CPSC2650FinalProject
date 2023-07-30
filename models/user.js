@@ -4,7 +4,7 @@ function User(username, password, firstName, lastName, role) {
         password: password,
         firstName: firstName,
         lastName: lastName,
-        role: role,
+        role: "USER" | "MODERATOR" | "ADMIN",
     }
 }
 module.exports = User
