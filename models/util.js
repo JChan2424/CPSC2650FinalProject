@@ -22,6 +22,7 @@
    * Data Manipulation Language (DML) functions
    */
   //-------------------------------------------------------------------------
+  
   //find matching documents
   const find = async (collection, query) => {
     return collection
@@ -31,14 +32,6 @@
         console.log("Could not find ", query, err.message);
       });
   };
-
-  // find one matching document
-  const findOne = async (collection, query) => {
-    return collection.findOne(query)
-      .catch((err) => {
-        console.log("Could not find ", query, err.message);
-      });
-  };  
 
   //delete matching documents
   const deleteMany = async (collection, query) => {
@@ -119,7 +112,6 @@
     getMongoClient: getMongoClient,
     logRequest: logRequest,
     find: find,
-    findOne: findOne,
     insertOne: insertOne,
     insertMany: insertMany,
     getMongoClient: getMongoClient,
