@@ -114,6 +114,8 @@
     find: find,
     insertOne: insertOne,
     insertMany: insertMany,
+    deleteOne: deleteOne,
+    deleteMany: deleteMany,
     getMongoClient: getMongoClient,
   };
   const moduleExport = util;
