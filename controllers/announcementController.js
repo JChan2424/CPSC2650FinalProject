@@ -83,11 +83,7 @@ announcementController.post(
   async (req, res, next) => {
     let collection = client.db().collection("Announcements");
 
-    let result = await util.updateOne(
-      collection,
-      { topic: req.params.topic },
-      { $addToSet: { subscribers: req.body.email } }
-    );
+    // TODO: Need to plan database structure for subscriptions
     res.status(200).json(result);
   }
 );
