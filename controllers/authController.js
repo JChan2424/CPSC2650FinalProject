@@ -1,24 +1,26 @@
 const util = require("../models/util.js");
 const config = require("./config/config.js");
+const client = util.getMongoClient();
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const express = require("express");
 const authController = express.Router();
 
+// TODO: Fix Roles
 authController.post("/api/signup", util.logRequest, async (req, res) => {
     
-    // TODO: Add validation for username and password
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
 
-    // Check if username and password are provided
     if (!username || !password) {
         res.status(400);
         return res.json({ success: false, message: "Username and password are required" });
     }
 
-    // check if username already exists
+    let uRole = role.toUpperCase() || "USER";
+
     let collection = client.db().collection("Users");
-    let result = await util.findOne(collection, { username: username });
+    
+    let result = await collection.findOne({ username: username });
 
     if (result != null) {
         res.status(400);
@@ -26,14 +28,10 @@ authController.post("/api/signup", util.logRequest, async (req, res) => {
     }
 
     // Add user to database
-    const user = new User({
-        username: username,
-        password: password,
-    });
+    const user = new User(username, password, uRole);
 
     const addUser = await util.insertOne(collection, user);
-    
-    // TODO: Add error handling
+
     res.status(200).json(addUser);
 });
 
@@ -51,10 +49,7 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
     // TODO: Need to fix this
     let collection = client.db().collection("Users");
 
-    let result = await util.findOne(collection, {
-        username: username,
-        password: password,
-    });
+    let result = await collection.findOne({ username: username, password: password });
 
     if (result == null) {
         return res.status(401).json({ success: false, message: "Invalid credentials" });
@@ -65,12 +60,15 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
     let role = result.role;
     
     // Sign JWT token
-    const token = jwt.sign({ username: username, role: role}, config.SECRET, {
+    const token = jwt.sign({ username: username, role: role }, config.SECRET, {
         expiresIn: config.SESSION_LENGTH,
     });
 
     // TODO: Add error handling
     // return the token
+
+    
+    // !! TODO: When login also need to send role back with token
     res.status(200).json({ success: true, token: token });
 });
 
@@ -92,7 +90,7 @@ authController.post('/api/verify', util.logRequest, (req, res) => {
         }
 
         // Check if the role/username in the token matches the role in the request
-        if (req.role != decoded.role || req.username != decoded.username) {
+        if (decoded.role != req.body.role || req.body.username != decoded.username) {
             return res.status(402).json({ success: false, message: 'Modified Request' });
         }
 

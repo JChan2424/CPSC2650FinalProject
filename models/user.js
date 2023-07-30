@@ -1,8 +1,9 @@
-function User(username, password, firstName, lastName, role) {
+function User(username, password, role) {
     return {
         username: username,
         password: password,
-        role: "USER" | "MODERATOR" | "ADMIN",
+        role: role,
     }
 }
+
 module.exports = User
