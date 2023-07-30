@@ -17,6 +17,7 @@ const config = require("./config/config")
 const util = require('../models/util.js')
 const homeController = require('../controllers/homeController')
 const announcementController = require('../controllers/announcementController')
+const authController = require('../controllers/authController')
 
 //----------------------------------------------------------------
 
@@ -30,6 +31,7 @@ const announcementController = require('../controllers/announcementController')
 server.use(express.static(config.ROOT))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
+server.use(authController)
 server.use(homeController)
 server.use(announcementController)
 server.get('/logs', async (req, res, next) => {
