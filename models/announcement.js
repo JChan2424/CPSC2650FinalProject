@@ -1,4 +1,4 @@
-const Annoucement = (title, message, topic, author) => {
+function Annoucement(title, message, topic, author) {
     return {
         Title: title,
         Message: message,

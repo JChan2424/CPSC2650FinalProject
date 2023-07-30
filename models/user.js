@@ -1,4 +1,4 @@
-const User = (username, password, firstName, lastName, role) => {
+function User(username, password, firstName, lastName, role) {
     return {
         Username: username,
         Password: password,
