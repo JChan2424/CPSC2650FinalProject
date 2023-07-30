@@ -45,6 +45,30 @@ announcementController.get(
   }
 );
 
+// !! DEBUG
+announcementController.get(
+  "/api/users",
+  util.logRequest,
+  async (req, res, next) => {
+    let collection = client.db().collection("Users");
+
+    let users = await util.find(collection, {});
+    res.status(200).json(users);
+  }
+);
+
+// !! DEBUG
+announcementController.delete(
+  "/api/users/:id",
+  util.logRequest,
+  async (req, res, next) => {
+    let collection = client.db().collection("Users");
+
+    let result = await util.deleteOne(collection, { _id: new ObjectId(req.params.id) });
+    res.status(200).json(result);
+  }
+);
+
 // returns announcement by id
 announcementController.get(
   "/api/announcements/:id",
