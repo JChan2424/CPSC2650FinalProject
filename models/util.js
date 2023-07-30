@@ -31,6 +31,15 @@
         console.log("Could not find ", query, err.message);
       });
   };
+
+  // find one matching document
+  const findOne = async (collection, query) => {
+    return collection.findOne(query)
+      .catch((err) => {
+        console.log("Could not find ", query, err.message);
+      });
+  };  
+
   //delete matching documents
   const deleteMany = async (collection, query) => {
     return collection.deleteMany(query).catch((err) => {
@@ -110,6 +119,7 @@
     getMongoClient: getMongoClient,
     logRequest: logRequest,
     find: find,
+    findOne: findOne,
     insertOne: insertOne,
     insertMany: insertMany,
     getMongoClient: getMongoClient,
