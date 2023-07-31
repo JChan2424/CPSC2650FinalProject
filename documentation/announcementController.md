@@ -16,7 +16,7 @@ Middleware function to validate announcement data before creating a new announce
 
 ### Get All Announcements
 
-- Endpoint: /api/announcements
+- Endpoint: `/api/announcements`
 - Method: GET
 - Description: Returns all announcements.
 - Response Status Code: 200 OK
@@ -38,7 +38,7 @@ Middleware function to validate announcement data before creating a new announce
 
 ### Get Announcement by ID
 
-- Endpoint: /api/announcements/:id
+- Endpoint: `/api/announcements/:id`
 - Method: GET
 - Description: Returns the announcement with the specified ID.
 - Request URL Parameter:
