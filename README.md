@@ -8,14 +8,13 @@
 - role: String
 - firstName: String
 - lastName: String
-- subscribed_topics: String[]
-- announcements: Announcement[]
+- announcements: String[] (IDs of announcements)
 
 **Announcement**
 - title: String
 - message: String
 - topic: String
-- author: User
+- author: String (username of author)
 - createdAt: String (date in ISO format, 2011-10-05T14:48:00.000Z)
 
 ## Routes
