@@ -10,6 +10,33 @@ const Register = props=>{
         e.preventDefault();
         //verify password is secure
         //make a call to register endpoint
+
+        fetch("/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "username": username,
+                "password": password,
+                "confirmedPassword": confirmedPassword,
+            }),
+        }).then((res) => {
+
+            if (res.status === 400) {
+
+                //alert: invalid request, try again
+
+            }
+
+            if (res.status === 409) {
+                //alert: username already exists
+            }
+
+            if (res.status === 200) {
+                //redirect to login page
+            }
+        });
     }
 
     return (
