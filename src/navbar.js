@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from "react";
 
 const Navbar = props => {
+    let [term, setTerm] = useState();
     useEffect(() => {
         // check if credentials are in local storage
     
         if (localStorage.getItem("token") === null) {
           // if not, redirect to login page
-          window.location.href = "/login?redirect=" + window.location.pathname;
+          // window.location.href = "/login?redirect=" + window.location.pathname;
         }
     
         // if so, send credentials to server to check if they are valid
@@ -29,7 +30,19 @@ const Navbar = props => {
           // if so, do nothing
         });
       }, []);
-    
+    // TODO: add event handler that makes API request for search.
+    // On submit button click, make api call using the end point '/api/search/:term'
+
+    const updateSearchTerm = (event) => {
+      setTerm(event.target.value);
+    }
+
+    const sendSearchRequest = async (event) => {
+      if (term != null && term.length > 0) {
+        let response = await fetch(`/api/search/:${term}`);
+        let data = response.json();
+      }
+    }
     return (
         <>
             <nav className="navbar navbar-expand-md navbar-primary bg-primary mb-4">

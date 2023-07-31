@@ -6,7 +6,7 @@ const Body = props => {
     
         if (localStorage.getItem("token") === null) {
           // if not, redirect to login page
-          window.location.href = "/login?redirect=" + window.location.pathname;
+        //   window.location.href = "/login?redirect=" + window.location.pathname;
         }
     
         // if so, send credentials to server to check if they are valid
