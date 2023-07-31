@@ -7,31 +7,43 @@ const express = require("express");
 const authController = express.Router();
 
 // TODO: Fix Roles
-authController.post("/api/signup", util.logRequest, async (req, res) => {
+authController.post("/api/register", util.logRequest, async (req, res) => {
     
-    const { username, password, role } = req.body;
+    const { username, password, confirmedPassword, invite, role } = req.body;
 
     if (!username || !password) {
         res.status(400);
         return res.json({ success: false, message: "Username and password are required" });
     }
 
-    let uRole = role.toUpperCase() || "USER";
+    let user;
+
+    if (invite == config.invite) {
+        user = new User(username, password, role);
+    } else {
+        user = new User(username, password, "USER");
+    }
+
+    if (password != confirmedPassword) {
+        res.status(400);
+        return res.json({ success: false, message: "Passwords do not match" });
+    }
+
+    
 
     let collection = client.db().collection("Users");
     
     let result = await collection.findOne({ username: username });
 
     if (result != null) {
-        res.status(400);
+        res.status(409);
         return res.json({ success: false,  message: "Username already exists" });
     }
-
-    // Add user to database
-    const user = new User(username, password, uRole);
+    
 
     const addUser = await util.insertOne(collection, user);
 
+    // TODO: Fix JSON return
     res.status(200).json(addUser);
 });
 
@@ -91,7 +103,7 @@ authController.post('/api/verify', util.logRequest, (req, res) => {
 
         // Check if the role/username in the token matches the role in the request
         if (decoded.role != req.body.role || req.body.username != decoded.username) {
-            return res.status(402).json({ success: false, message: 'Modified Request' });
+            return res.status(400).json({ success: false, message: 'Modified Request' });
         }
 
         // If token is valid return 200
