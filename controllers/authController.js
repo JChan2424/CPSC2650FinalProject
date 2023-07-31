@@ -8,7 +8,7 @@ const authController = express.Router();
 
 // TODO: Fix Roles
 authController.post("/api/register", util.logRequest, async (req, res) => {
-    
+
     const { username, password, confirmedPassword, invite, role } = req.body;
 
     if (!username || !password) {
@@ -18,7 +18,7 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
 
     let user;
 
-    if (invite == config.invite) {
+    if (invite == config.INVITE) {
         user = new User(username, password, role);
     } else {
         user = new User(username, password, "USER");
@@ -29,27 +29,33 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
         return res.json({ success: false, message: "Passwords do not match" });
     }
 
-    
-
     let collection = client.db().collection("Users");
-    
     let result = await collection.findOne({ username: username });
 
     if (result != null) {
+
         res.status(409);
-        return res.json({ success: false,  message: "Username already exists" });
+        return res.json({ success: false, message: "Username already exists" });
     }
-    
 
-    const addUser = await util.insertOne(collection, user);
+    try {
 
-    // TODO: Fix JSON return
-    res.status(200).json(addUser);
+        await util.insertOne(collection, user);
+
+        res.status(200).json({
+            success: true,
+            message: "User created",
+        });
+
+    } catch (err) {
+
+        res.status(500);
+        return res.json({ success: false, message: "Failed to create user" });
+    }
 });
 
 authController.post("/api/login", util.logRequest, async (req, res) => {
-    
-    // TODO: Add validation for username and password
+
     const { username, password } = req.body;
 
     // Check if username and password are provided
@@ -58,7 +64,7 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
     }
 
     // check if credentials are valid
-    // TODO: Need to fix this
+    // TODO: Need to fix this by adding hashing and salting
     let collection = client.db().collection("Users");
 
     let result = await collection.findOne({ username: username, password: password });
@@ -67,21 +73,20 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
         return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    // TODO: Add error handling
-    // Get the role of the user to sign JWT token with
     let role = result.role;
-    
-    // Sign JWT token
-    const token = jwt.sign({ username: username, role: role }, config.SECRET, {
-        expiresIn: config.SESSION_LENGTH,
-    });
 
-    // TODO: Add error handling
-    // return the token
+    try {
+        const token = jwt.sign({ username: username, role: role }, config.SECRET, {
+            expiresIn: config.SESSION_LENGTH,
+        });
 
-    
-    // !! TODO: When login also need to send role back with token
-    res.status(200).json({ success: true, token: token });
+        res.status(200).json({ success: true, token: token, role: role, username: username });
+    }
+    catch (err) {
+        res.status(500);
+        return res.json({ success: false, message: "Failed to create token" });
+    }
+
 });
 
 authController.post('/api/verify', util.logRequest, (req, res) => {
@@ -95,7 +100,7 @@ authController.post('/api/verify', util.logRequest, (req, res) => {
     }
 
     jwt.verify(token, config.SECRET, (err, decoded) => {
-        
+
         // If token is invalid return 401
         if (err) {
             return res.status(401).json({ success: false, message: 'Failed to authenticate token' });
