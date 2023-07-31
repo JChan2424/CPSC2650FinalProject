@@ -1,33 +1,61 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 const Navbar = props => {
-
+    useEffect(() => {
+        // check if credentials are in local storage
+    
+        if (localStorage.getItem("token") === null) {
+          // if not, redirect to login page
+          window.location.href = "/login?redirect=" + window.location.pathname;
+        }
+    
+        // if so, send credentials to server to check if they are valid
+        fetch("/api/announcement", {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+          }
+        }).then((res) => {
+          // if not, redirect to login page
+          if (res.status === 401) {
+            window.location.href = "/login";
+          }
+    
+          if (res.status === 200) {
+            // if so, do nothing
+            
+          }
+    
+          // if so, do nothing
+        });
+      }, []);
+    
     return (
         <>
-            <nav class="navbar navbar-expand-md navbar-primary bg-primary mb-4">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="index.html">Langara Announcements</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+            <nav className="navbar navbar-expand-md navbar-primary bg-primary mb-4">
+                <div className="container-fluid">
+                    <a className="navbar-brand" href="index.html">Langara Announcements</a>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    <div className="collapse navbar-collapse" id="navbarCollapse">
+                        <ul className="navbar-nav me-auto mb-2 mb-md-0">
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="index.html">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="https://langara.ca">Langara Homepage</a>
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="https://langara.ca">Langara Homepage</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="index.html">My Feed</a>
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="index.html">My Feed</a>
                             </li>
                         </ul>
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Topics, authors, etc." aria-label="Search"/>
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        <form className="d-flex" role="search">
+                            <input className="form-control me-2" type="search" placeholder="Topics, authors, etc." aria-label="Search"/>
+                            <button className="btn btn-outline-success" type="submit">Search</button>
                         </form>
-                        <button class="btn btn-primary ms-1">Login</button>
-                        <button class="btn btn-primary">Sign out</button>
+                        <button className="btn btn-primary ms-1">Login</button>
+                        <button className="btn btn-primary">Sign Up</button>
                     </div>
                 </div>
             </nav>

@@ -1,12 +1,17 @@
-import React from "react";
-const Footer = props => {
+import React, { useState } from "react";
 
+const Footer = props => {
+    let [year, setYear] = useState();
+    let updateCopyright = () => {
+        let date = new Date();
+        setYear(date.getFullYear());
+    }
     return (
         <>
             <hr/>
-            <div class="h4 text-center">
+            <div className="h4 text-center">
                 <footer>
-                    <kbd> &copy; <span></span> Joshua Chan, Ashwin Charathsandran, Kieran Lee. All Rights Reserved.</kbd>
+                    <kbd> &copy; <span>{year}</span> Joshua Chan, Ashwin Charathsandran, Kieran Lee. All Rights Reserved.</kbd>
                 </footer>
             </div>
         </>
