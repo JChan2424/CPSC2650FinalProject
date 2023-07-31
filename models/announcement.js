@@ -4,7 +4,7 @@ function Annoucement(title, message, topic, author) {
         message: message,
         topic: topic,
         author: author,
-        createdAt: new Date().toUTCString(),
+        createdAt: new Date().toISOString(),
     }
 }
 module.exports = Annoucement
