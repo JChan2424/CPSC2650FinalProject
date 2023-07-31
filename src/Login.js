@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
-const { useState, useEffect } = React;
+// const { useState, useEffect } = React;
 
 const Login = props=>{
     let [ username, setUsername ] = useState();
