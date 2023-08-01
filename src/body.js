@@ -33,9 +33,7 @@ const Body = props => {
         // props.setPostArray(getMostRecentPosts());
         // console.log(props.postArray)
       }, []);
-    // TODO: Add API request for getting get 10 most recent posts (Use effect hook)
-    
-    // TODO: Add API request for getting Topics for the topics bar
+      
     return (
         <>
             <main>
