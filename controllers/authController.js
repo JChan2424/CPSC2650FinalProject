@@ -80,7 +80,7 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
             expiresIn: config.SESSION_LENGTH,
         });
 
-        res.status(200).json({ success: true, token: token, role: role, username: username });
+        res.status(200).json({ success: true, token: token, role: role, username: username, role: role });
     }
     catch (err) {
         res.status(500);
@@ -104,11 +104,6 @@ authController.post('/api/verify', util.logRequest, (req, res) => {
         // If token is invalid return 401
         if (err) {
             return res.status(401).json({ success: false, message: 'Failed to authenticate token' });
-        }
-
-        // Check if the role/username in the token matches the role in the request
-        if (decoded.role != req.body.role || req.body.username != decoded.username) {
-            return res.status(400).json({ success: false, message: 'Modified Request' });
         }
 
         // If token is valid return 200
