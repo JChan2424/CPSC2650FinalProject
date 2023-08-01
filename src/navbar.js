@@ -32,15 +32,29 @@ const Navbar = props => {
       }, []);
     // TODO: add event handler that makes API request for search.
     // On submit button click, make api call using the end point '/api/search/:term'
+    // Use boostrap modals? 
 
     const updateSearchTerm = (event) => {
       setTerm(event.target.value);
+      console.log(term);
+    }
+
+    let searchForTerm = async (term) => {
+      let results = await fetch(`/api/search/:${term}`);
+      return results.json();
     }
 
     const sendSearchRequest = async (event) => {
+      console.log("click");
+      event.preventDefault();
       if (term != null && term.length > 0) {
-        let response = await fetch(`/api/search/:${term}`);
-        let data = response.json();
+        // Encode uri: See link in discord
+        props.setPosts([])
+        let response = await searchForTerm(event.target.value);
+        console.log(response.data);
+        // let data = response.json();
+        // console.log(data);
+        props.setPosts(response.data);
       }
     }
     return (
@@ -64,8 +78,8 @@ const Navbar = props => {
                             </li>
                         </ul>
                         <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Topics, authors, etc." aria-label="Search"/>
-                            <button className="btn btn-outline-success" type="submit">Search</button>
+                            <input className="form-control me-2" type="search" placeholder="Topics, authors, etc." aria-label="Search" onChange={updateSearchTerm}/>
+                            <button className="btn btn-outline-success" type="submit" onClick={sendSearchRequest}>Search</button>
                         </form>
                         <button className="btn btn-primary ms-1">Login</button>
                         <button className="btn btn-primary">Sign Up</button>
