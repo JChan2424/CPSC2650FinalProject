@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Footer = props => {
     let [year, setYear] = useState();
-    let updateCopyright = () => {
+    useEffect(() => {
         let date = new Date();
         setYear(date.getFullYear());
-    }
+    }, []);
+
     return (
         <>
             <hr/>
