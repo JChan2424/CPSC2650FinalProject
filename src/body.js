@@ -33,24 +33,34 @@ const Body = props => {
         // props.setPostArray(getMostRecentPosts());
         // console.log(props.postArray)
       }, []);
+      let goBackToAll = (event) => {
+        event.preventDefault();
+        props.setSearchStatus(false)
+      }
       
     return (
         <>
             <main>
                 <div className="container text-center bg-secondary">
                     <div className="row">
-                    <div className="col-2 card me-4 bg-primary">
-                        <div className="card-header bg-primary"><h3>All Topics</h3></div>
-                        <div className="card-body"></div> 
-                    </div>
-                    <div className="col-8 card me-4">
-                        <div className="card-header"><h3>Recent Posts</h3></div>
-                        <Posts posts={props.posts} setPosts={props.setPosts} />
-                    </div>
-                    <div className="col card bg-primary">
-                        <div className="card-header bg-primary"><h3>Weather</h3></div>
-                        <Weather />
-                    </div>
+                        <div className="col-2 card me-4 d-none d-sm-block bg-primary">
+                            <div className="card-header bg-primary"><h3>All Topics</h3></div>
+                            <div className="card-body"></div> 
+                        </div>
+                        <div className="col-8 card me-4" style={{ minWidth: 25 + '%' }}>
+                            {!props.search ? 
+                                <><div className="card-header"><h3>Recent Posts</h3></div>
+                                <Posts posts={props.posts} setPosts={props.setPosts} /></>
+                                :<> 
+                                <div className="card-header"><h3>Search Results</h3></div>
+                                {props.posts.length > 0 ? <Posts posts={props.posts} setPosts={props.setPosts} /> : <><p>No posts match your search term.</p></>}
+                                <button className="btn btn-primary" onClick={goBackToAll}>Go back to all posts</button>
+                            </>}
+                        </div>
+                        <div className="col card bg-primary d-sm-block">
+                            <div className="card-header bg-primary"><h3>Weather</h3></div>
+                            <Weather />
+                        </div>
                     </div>
                 </div>
             </main>
