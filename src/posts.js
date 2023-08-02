@@ -28,7 +28,7 @@ const Posts = props => {
             {props.posts ? (props.posts.map(post=>(<div className="card" key={post._id}>
                     <div className="card-title" >{post.title}</div>
                     <div className="card-body"><p>Topic: {post.topic}</p></div>
-                    <div className="card-body">{post.message}</div>
+                    <div className="card-body overflow-scroll">{post.message}</div>
                 </div>))
             ):(<p>Loading posts</p>)}
         </>
