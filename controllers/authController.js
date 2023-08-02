@@ -17,7 +17,9 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
     }
 
     let user;
-
+    // TODO: Add hashing here
+    password = crypto.createHash("sha1").update(password).digest("hex");
+    console.log("Password: " + password);
     if (invite == config.INVITE) {
         user = new User(username, password, role);
     } else {
@@ -62,7 +64,7 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
     if (!username || !password) {
         return res.status("402").json({ success: false, message: "Username and password are required" });
     }
-
+    password = crypto.createHash("sha1").update(password).digest("hex");
     // check if credentials are valid
     // TODO: Need to fix this by adding hashing and salting
     let collection = client.db().collection("Users");
