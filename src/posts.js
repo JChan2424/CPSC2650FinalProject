@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
+import { useLocation } from "react-router"; 
+
+
 
 const Posts = props => {
     const [loadStatus, setLoadStatus] = useState([]);
+    let [ localPosts, setLocalPosts] = useState();
+    const location = useLocation();
+    let posts = location.state?.posts;
     
     // setLoadStatus('loading');
     // console.log(`${loadStatus}`)
@@ -13,8 +19,9 @@ const Posts = props => {
         (async () => {
             let results = await getMostRecentPosts();
             console.log(results)
-            props.setPosts(results)
-            console.log(props.posts);
+            posts = results
+            console.log("posts", posts);
+            setLocalPosts(posts);
         })()
     
     }, []);
@@ -24,8 +31,8 @@ const Posts = props => {
     // TODO: Add API request for getting Topics for the topics bar
     return (
         <>
-            {console.log(props.posts)}
-            {props.posts ? (props.posts.map(post=>(<div className="card" key={post._id}>
+            {console.log("localposts", localPosts)}
+            {localPosts ? (localPosts.map(post=>(<div className="card" key={post._id}>
                     <div className="card-title" >{post.title}</div>
                     <div className="card-body"><p>Topic: {post.topic}</p></div>
                     <div className="card-body">{post.message}</div>

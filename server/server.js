@@ -31,7 +31,7 @@ const utilController = require('../controllers/utilController')
 // middleware
 server.use(express.static(config.ROOT))
 server.use(express.json())
-server.use(express.urlencoded({ extended: false }))
+server.use(express.urlencoded({ extended: true }))
 server.use(authController)
 server.use(homeController)
 server.use(announcementController)

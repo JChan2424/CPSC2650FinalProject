@@ -7,6 +7,8 @@ const express = require("express");
 const authController = express.Router();
 
 // TODO: Fix Roles
+authController.use(express.urlencoded({ extended: true}));
+authController.use(express.json());
 authController.post("/api/register", util.logRequest, async (req, res) => {
 
     const { username, password, confirmedPassword, invite, role } = req.body;
@@ -91,6 +93,7 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
 
 authController.post('/api/verify', util.logRequest, (req, res) => {
 
+    console.log("inside veerify", req.body)
     // Check if token is provided and if so get the token
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
 
@@ -100,6 +103,7 @@ authController.post('/api/verify', util.logRequest, (req, res) => {
     }
 
     jwt.verify(token, config.SECRET, (err, decoded) => {
+        
 
         // If token is invalid return 401
         if (err) {
