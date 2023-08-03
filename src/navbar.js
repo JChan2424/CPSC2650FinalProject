@@ -80,7 +80,7 @@ const Navbar = props => {
         // Encode uri: See link in discord
         props.setPosts([])
         let response = await searchForTerm(term);
-        console.log(response.data);
+        console.log("search response", response.data);
         // let data = response.json();
         // console.log(data);
         props.setPosts(response.data);
