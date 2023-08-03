@@ -57,7 +57,7 @@ const Login = props=>{
 
                 <label className="d-block p-2">
                     Enter password:<br />
-                    <input type="text" onChange={e=>setPassword(e.target.value)}></input>
+                    <input type="password" onChange={e=>setPassword(e.target.value)}></input>
                 </label>
                 <button className="btn btn-primary p-2 m-2">Submit</button>
             </form>
