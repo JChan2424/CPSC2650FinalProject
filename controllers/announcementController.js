@@ -7,154 +7,140 @@ const express = require("express");
 const announcementController = express.Router();
 
 // Custom Middleware
-
 const validateAnnoucement = (req, res, next) => {
+    req.body.topic = req.body.topic ? req.body.topic.toLowerCase() : "general";
+    req.body.date = new Date().toISOString();
 
-  if (req.body.topic == null) {
-    req.body.topic = "general";
-  } else {
-    req.body.topic = req.body.topic.toLowerCase();
-  }
+    if (req.body.message == null) {
+        return res.status(400).json({ message: "Message is required" });
+    }
+    if (req.body.author == null) {
+        return res.status(400).json({ message: "Author is required" });
+    }
+    if (req.body.title == null) {
+        return res.status(400).json({ message: "Title is required" });
+    }
 
-  if (req.body.message == null) {
-    res.status(400);
-    return res.send("Message is required");
-  }
-
-  if (req.body.author == null) {
-    res.status(400);
-    return res.send("Author is required");
-  }
-
-  req.body.date = new Date().toISOString();
-
-  next();
+    next();
 };
 
 // Routes
 
-// returns all announcements
+// Register a new route handler for GET requests to the "/api/announcements" path
 announcementController.get(
-  "/api/announcements",
-  util.logRequest,
-  async (req, res, next) => {
-    let collection = client.db().collection("Announcements");
+    "/api/announcements", // The route path
 
-    let announcements = await util.find(collection, {});
-    res.status(200).json(announcements);
-  }
+    util.logRequest, // Middleware function that logs the request
+
+    // The route handler function
+    async (req, res, next) => {
+        // Get the "Announcements" collection from the MongoDB database
+        let collection = client.db().collection("Announcements");
+
+        // Use the utility function to find all documents in the "Announcements" collection
+        // The {} argument to find means "match all documents"
+        let announcements = await util.find(collection, {});
+
+        // Send the found announcements back to the client with a 200 OK status code
+        // The result is automatically converted to JSON
+        res.status(200).json(announcements);
+    }
 );
 
-// !! DEBUG
+// Get announcement by ID
 announcementController.get(
-  "/api/users",
-  util.logRequest,
-  async (req, res, next) => {
-    let collection = client.db().collection("Users");
+    "/api/announcements/:id",
+    util.logRequest, // Middleware to log the request
+    async (req, res, next) => {
+        // Get the Announcements collection from MongoDB
+        let collection = client.db().collection("Announcements");
 
-    let users = await util.find(collection, {});
-    res.status(200).json(users);
-  }
+        // Log the requested ID
+        console.log("Requested: " + req.params.id);
+
+        // Find the announcement with the requested ID and return it
+        let announcement = await collection.findOne({
+            _id: new ObjectId(req.params.id),
+        });
+        res.status(200).json(announcement);
+    }
 );
 
-// !! DEBUG
-announcementController.delete(
-  "/api/users/:id",
-  util.logRequest,
-  async (req, res, next) => {
-    let collection = client.db().collection("Users");
-
-    let result = await util.deleteOne(collection, { _id: new ObjectId(req.params.id) });
-    res.status(200).json(result);
-  }
-);
-
-// returns announcement by id
+// Get announcements by topic
 announcementController.get(
-  "/api/announcements/:id",
-  util.logRequest,
-  async (req, res, next) => {
+    "/api/announcements/topic/:topic",
+    util.logRequest, // Middleware to log the request
+    async (req, res, next) => {
+        // Get the Announcements collection from MongoDB
+        let collection = client.db().collection("Announcements");
 
-    let collection = client.db().collection("Announcements");
+        // Log the requested topic
+        console.log("Requested: " + req.params.topic);
 
-    console.log("Requested: " + req.params.id);
-
-    let announcement = await collection.findOne({
-      _id: new ObjectId(req.params.id),
-    });
-
-    res.status(200).json(announcement);
-  }
+        // Find all announcements with the requested topic and return them
+        let announcement = await util.find(collection, {
+            topic: req.params.topic.toLowerCase(),
+        });
+        res.status(200).json(announcement);
+    }
 );
 
-//  returns announcement by topic
+// Get the last X announcements
 announcementController.get(
-  "/api/announcements/topic/:topic",
-  util.logRequest,
-  async (req, res, next) => {
+    "/api/announcements/last/:count",
+    util.logRequest, // Middleware to log the request
+    async (req, res, next) => {
+        // Get the Announcements collection from MongoDB
+        let collection = client.db().collection("Announcements");
 
-    let collection = client.db().collection("Announcements");
-
-    console.log("Requested: " + req.params.topic);
-
-    let announcement = await util.find(collection, { topic: req.params.topic.toLowerCase() });
-    res.status(200).json(announcement);
-  }
+        // Find the last X announcements and return them
+        let announcements = await util.find(
+            collection,
+            {},
+            { limit: parseInt(req.params.count) }
+        );
+        res.status(200).json(announcements);
+    }
 );
 
-// returns last x announcements
-announcementController.get(
-  "/api/announcements/last/:count",
-  util.logRequest,
-  async (req, res, next) => {
-    let collection = client.db().collection("Announcements");
-
-    let announcements = await util.find(
-      collection,
-      {},
-      { limit: parseInt(req.params.count) }
-    );
-    res.status(200).json(announcements);
-  }
-);
-
-// !! TODO: subscribe (subscribe to a topic)
-// announcementController.post(
-//   "/api/announcements/subscribe/:topic",
-//   util.logRequest,
-//   async (req, res, next) => {
-//     let collection = client.db().collection("Announcements");
-
-//     // TODO: Need to plan database structure for subscriptions
-//     res.status(200).json(result);
-//   }
-// );
-
-// create announcement
+// Create an announcement
 announcementController.post(
-  "/api/announcements",
-  validateAnnoucement,
-  util.logRequest,
-  async (req, res, next) => {
-    let collection = client.db().collection("Announcements");
+    "/api/announcements",
+    validateAnnoucement, // Middleware to validate the announcement data
+    util.logRequest, // Middleware to log the request
+    async (req, res, next) => {
+        // Get the Announcements collection from MongoDB
+        let collection = client.db().collection("Announcements");
 
-    let ann = new Announcement(req.body.title, req.body.message, req.body.topic, req.body.author);
+        // Create a new Announcement object
+        let ann = new Announcement(
+            req.body.title,
+            req.body.message,
+            req.body.topic,
+            req.body.author
+        );
 
-    let result = await util.insertOne(collection, ann);
-    res.status(200).json(result);
-  }
+        // Insert the new announcement into the database and return the result
+        let result = await util.insertOne(collection, ann);
+        res.status(200).json(result);
+    }
 );
 
-// delete announcement by id
+// Delete an announcement by ID
 announcementController.delete(
-  "/api/announcements/:id",
-  util.logRequest,
-  async (req, res, next) => {
-    let collection = client.db().collection("Announcements");
+    "/api/announcements/:id",
+    util.logRequest, // Middleware to log the request
+    async (req, res, next) => {
+        // Get the Announcements collection from MongoDB
+        let collection = client.db().collection("Announcements");
 
-    let result = await util.deleteOne(collection, { _id: new ObjectId(req.params.id) });
-    res.status(200).json(result);
-  }
+        // Delete the announcement with the given ID and return the result
+        let result = await util.deleteOne(collection, {
+            _id: new ObjectId(req.params.id),
+        });
+        res.status(200).json(result);
+    }
 );
 
+// Export the announcementController for use in other modules
 module.exports = announcementController;
