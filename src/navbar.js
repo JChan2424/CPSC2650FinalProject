@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = props => {
     let [term, setTerm] = useState();
     let [role, setRole] = useState();
+    let [searchedPosts, setSearchedPosts] = useState();
+    let [searchStatus, setSearchStatus] = useState();
+    let navigate = useNavigate();
     useEffect(() => {
         // check if credentials are in local storage
         console.log("navbar useEffect");
@@ -36,24 +39,24 @@ const Navbar = props => {
         }
     
         // if so, send credentials to server to check if they are valid
-        fetch("/api/announcement", {
-          method: "GET",
-          headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-          }
-        }).then((res) => {
-          // if not, redirect to login page
-          if (res.status === 401) {
-            //window.location.href = "/login";
-          }
+        // fetch("/api/announcement", {
+        //   method: "GET",
+        //   headers: {
+        //     "Authorization": "Bearer " + localStorage.getItem("token"),
+        //   }
+        // }).then((res) => {
+        //   // if not, redirect to login page
+        //   if (res.status === 401) {
+        //     //window.location.href = "/login";
+        //   }
     
-          if (res.status === 200) {
-            // if so, do nothing
+        //   if (res.status === 200) {
+        //     // if so, do nothing
             
-          }
+        //   }
     
-          // if so, do nothing
-        });
+        //   // if so, do nothing
+        // });
       });
     // TODO: add event handler that makes API request for search.
     // On submit button click, make api call using the end point '/api/search/:term'
@@ -65,7 +68,7 @@ const Navbar = props => {
 
     let searchForTerm = async (term) => {
       let url = encodeURI(`/api/search/:${term}`)
-      console.log(url);
+      console.log("url", url);
       let results = await fetch(url);
       return results.json();
     }
@@ -81,8 +84,10 @@ const Navbar = props => {
         // let data = response.json();
         // console.log(data);
         props.setPosts(response.data);
-        props.setSearchStatus(true);
+        setSearchedPosts(response.data);
+        setSearchStatus(true);
         setTerm('');
+        navigate("/announcements", {state:{searchStatus: true, searchedPosts: searchedPosts}, replace: true});
       }
     }
     return (
@@ -97,7 +102,7 @@ const Navbar = props => {
                         <ul className="navbar-nav me-auto mb-2 mb-md-0">
                             <li className="nav-item">
                                 {/* <a className="nav-link active" aria-current="page" href="/">Home</a> */}
-                                <Link to={"/announcements"} state={{posts: props.posts}} className="nav-link-active">Home</Link>
+                                <Link to={"/announcements"} state={{searchedPosts: searchedPosts, searchStatus: searchStatus}} className="nav-link-active">Home</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="https://langara.ca">Langara Homepage</a>

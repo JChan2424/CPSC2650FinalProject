@@ -1,14 +1,31 @@
 import React, { useState,useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Weather from "./weather";
 import Posts from "./posts";
 
 
 
 const Body = props => {
+  let [ posts, setPosts ] = useState();
   const location = useLocation();
-  let posts = location.state?.posts;
+  const navigate = useNavigate();
+  let searchStatus = location.state?.searchStatus;
+  let searchedPosts = location.state?.searchedPosts;
+  if (searchStatus) {
+    console.log("search status", searchStatus);
+  } else {
+    searchStatus = false;
+  }
+  if (searchedPosts) {
+    console.log("searchedPosts", searchedPosts);
+  } else {
+    searchedPosts = {};
+  }
+
     useEffect(() => {
+      
+     
+      
         // check if credentials are in local storage
         
         if (localStorage.getItem("token") === null) {
@@ -16,33 +33,43 @@ const Body = props => {
         //   window.location.href = "/login?redirect=" + window.location.pathname;
         }
     
-        // if so, send credentials to server to check if they are valid
-        fetch("/api/announcement", {
-          method: "GET",
-          headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token"),
-          }
-        }).then((res) => {
-          // if not, redirect to login page
-          if (res.status === 401) {
-            //window.location.href = "/login";
-          }
+        // // if so, send credentials to server to check if they are valid
+        // fetch("/api/announcement", {
+        //   method: "GET",
+        //   headers: {
+        //     "Authorization": "Bearer " + localStorage.getItem("token"),
+        //   }
+        // }).then((res) => {
+        //   // if not, redirect to login page
+        //   if (res.status === 401) {
+        //     //window.location.href = "/login";
+        //   }
     
-          if (res.status === 200) {
-            // if so, do nothing
+        //   if (res.status === 200) {
+        //     // if so, do nothing
             
-          }
+        //   }
     
-          // if so, do nothing
-        });
+        //   // if so, do nothing
+        // });
+
+        (async () => {
+          let results = await getMostRecentPosts();
+          console.log(results)
+          setPosts(results);
+        })();
         
         // props.setPostArray(getMostRecentPosts());
         // console.log(props.postArray)
       }, []);
       let goBackToAll = (event) => {
         event.preventDefault();
-        props.setSearchStatus(false)
+        navigate("/announcements", {state:{searchStatus: false}, replace: true});
       }
+      let getMostRecentPosts = async () => {
+        let results = await fetch(`../api/announcements/last/:10`)
+        return results.json();
+    };
 
     return (
         <>
@@ -55,12 +82,12 @@ const Body = props => {
                             <div className="card-body"></div> 
                         </div>
                         <div className="col-8 card me-4" style={{ minWidth: 25 + '%' }}>
-                            {!props.search ? 
+                            {!searchStatus ? 
                                 <><div className="card-header"><h3>Recent Posts</h3></div>
-                                <Posts posts={props.posts} setPosts={props.setPosts} /></>
+                                <Posts posts={posts} /></>
                                 :<> 
                                 <div className="card-header"><h3>Search Results</h3></div>
-                                {props.posts.length > 0 ? <Posts posts={props.posts} setPosts={props.setPosts} /> : <><p>No posts match your search term.</p></>}
+                                {searchedPosts.length > 0 ? <Posts posts={searchedPosts} /> : <><p>No posts match your search term.</p></>}
                                 <button className="btn btn-primary" onClick={goBackToAll}>Go back to all posts</button>
                             </>}
                         </div>
