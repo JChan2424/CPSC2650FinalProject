@@ -18,19 +18,20 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
         return res.json({ success: false, message: "Username and password are required" });
     }
 
-    let user;
-    // TODO: Add hashing here
+    if (password != confirmedPassword) {
+        res.status(400);
+        return res.json({ success: false, message: "Passwords do not match" });
+    }
+
     password = crypto.createHash("sha1").update(password).digest("hex");
     console.log("Password: " + password);
+
+    let user;
+    
     if (invite == config.INVITE) {
         user = new User(username, password, role);
     } else {
         user = new User(username, password, "USER");
-    }
-
-    if (password != confirmedPassword) {
-        res.status(400);
-        return res.json({ success: false, message: "Passwords do not match" });
     }
 
     let collection = client.db().collection("Users");
@@ -67,8 +68,7 @@ authController.post("/api/login", util.logRequest, async (req, res) => {
         return res.status("402").json({ success: false, message: "Username and password are required" });
     }
     password = crypto.createHash("sha1").update(password).digest("hex");
-    // check if credentials are valid
-    // TODO: Need to fix this by adding hashing and salting
+    
     let collection = client.db().collection("Users");
 
     let result = await collection.findOne({ username: username, password: password });
