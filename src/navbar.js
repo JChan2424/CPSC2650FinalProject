@@ -61,25 +61,28 @@ const Navbar = props => {
 
     const updateSearchTerm = (event) => {
       setTerm(event.target.value);
-      console.log(term);
     }
 
     let searchForTerm = async (term) => {
-      let results = await fetch(`/api/search/:${term}`);
+      let url = encodeURI(`/api/search/:${term}`)
+      console.log(url);
+      let results = await fetch(url);
       return results.json();
     }
 
     const sendSearchRequest = async (event) => {
-      console.log("click");
       event.preventDefault();
-      if (term != null && term.length > 0) {
+      console.log(term);
+      if (term != '') {
         // Encode uri: See link in discord
         props.setPosts([])
-        let response = await searchForTerm(event.target.value);
+        let response = await searchForTerm(term);
         console.log(response.data);
         // let data = response.json();
         // console.log(data);
         props.setPosts(response.data);
+        props.setSearchStatus(true);
+        setTerm('');
       }
     }
     return (
@@ -110,10 +113,9 @@ const Navbar = props => {
                             <input className="form-control me-2" type="search" placeholder="Topics, authors, etc." aria-label="Search" onChange={updateSearchTerm}/>
                             <button className="btn btn-outline-success" type="submit" onClick={sendSearchRequest}>Search</button>
                         </form>
-                        {/* <button className="btn btn-primary ms-1">Login</button> */}
-                        {/* <button className="btn btn-primary">Sign Up</button> */}
                         <Link to={"/login"}  state={{test:"test"}} className="text-white">Log In</Link>
                         <Link to={"/register"} className="text-white">Sign Up</Link>
+
                     </div>
                 </div>
             </nav>

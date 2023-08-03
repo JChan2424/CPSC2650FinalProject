@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 
 const App = props => {
     const [posts, setPosts] = useState();
+    const [search, setSearchStatus] = useState(false);
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -15,15 +16,13 @@ const App = props => {
     return (
         <>
             <div >
-
-                <Navbar posts={posts} setPosts={setPosts} />
+            <Navbar posts={posts} setPosts={setPosts} search={search} setSearchStatus={setSearchStatus}/>
                     <div id="login">
                         <Outlet />
                     </div>
                 {/* <Body posts={posts} setPosts={setPosts} /> */}
+
                 <Footer />
-
-
             </div>
         </>
     );
