@@ -12,8 +12,7 @@ const Navbar = props => {
         console.log("navbar useEffect");
     
         if (localStorage.getItem("token") === null || localStorage.getItem("token") === undefined || localStorage.getItem("token") === "undefined") {
-          // if not, redirect to login page
-          // window.location.href = "/login?redirect=" + window.location.pathname;
+          setRole("NONE");
           console.log("no token");
         } else {
           fetch("/api/verify", {
@@ -24,7 +23,6 @@ const Navbar = props => {
             },
             body: JSON.stringify({
               "username": localStorage.getItem("username"),
-              "role" : localStorage.getItem("role") 
             })
           })
           .then(res=>{
@@ -32,35 +30,13 @@ const Navbar = props => {
               res.json().then(data=>{
                 setRole(data.role);
               })
-              
+            } else {
+              setRole("NONE");
             }
           })
           .catch(err=>console.log(err));
         }
-    
-        // if so, send credentials to server to check if they are valid
-        // fetch("/api/announcement", {
-        //   method: "GET",
-        //   headers: {
-        //     "Authorization": "Bearer " + localStorage.getItem("token"),
-        //   }
-        // }).then((res) => {
-        //   // if not, redirect to login page
-        //   if (res.status === 401) {
-        //     //window.location.href = "/login";
-        //   }
-    
-        //   if (res.status === 200) {
-        //     // if so, do nothing
-            
-        //   }
-    
-        //   // if so, do nothing
-        // });
       });
-    // TODO: add event handler that makes API request for search.
-    // On submit button click, make api call using the end point '/api/search/:term'
-    // Use boostrap modals? 
 
     const updateSearchTerm = (event) => {
       setTerm(event.target.value);
@@ -90,6 +66,13 @@ const Navbar = props => {
         navigate("/announcements", {state:{searchStatus: true, searchedPosts: searchedPosts}, replace: true});
       }
     }
+
+    const logout = ()=>{
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      setRole("NONE");
+      navigate("/announcements", {state:{searchedPosts: searchedPosts, searchStatus: searchStatus}, replace: true});
+    }
     return (
         <>
             <nav className="navbar navbar-expand-md navbar-primary bg-primary mb-4">
@@ -102,7 +85,7 @@ const Navbar = props => {
                         <ul className="navbar-nav me-auto mb-2 mb-md-0">
                             <li className="nav-item">
                                 {/* <a className="nav-link active" aria-current="page" href="/">Home</a> */}
-                                <Link to={"/announcements"} state={{searchedPosts: searchedPosts, searchStatus: searchStatus}} className="nav-link-active">Home</Link>
+                                <Link to={"/announcements"} state={{searchedPosts: searchedPosts, searchStatus: searchStatus}} className="nav-link-active, text-white">Home</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="https://langara.ca">Langara Homepage</a>
@@ -118,8 +101,12 @@ const Navbar = props => {
                             <input className="form-control me-2" type="search" placeholder="Topics, authors, etc." aria-label="Search" onChange={updateSearchTerm}/>
                             <button className="btn btn-outline-success" type="submit" onClick={sendSearchRequest}>Search</button>
                         </form>
-                        <Link to={"/login"}  state={{test:"test"}} className="text-white">Log In</Link>
-                        <Link to={"/register"} className="text-white">Sign Up</Link>
+                        {role === "NONE" ? 
+                          <><Link to={"/login"}  state={{test:"test"}} className="text-white">Log In</Link>
+                          <Link to={"/register"} className="text-white">Sign Up</Link></> :
+                          <button className="btn btn-outline-success" onClick={logout}>LogOut</button>
+                        }
+                        
 
                     </div>
                 </div>

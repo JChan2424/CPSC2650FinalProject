@@ -6,6 +6,8 @@ const Register = props=>{
     let [ username, setUsername ] = useState();
     let [ password, setPassword ] = useState();
     let [ confirmedPassword, setConfirmedPassword ] = useState();
+    let [ inviteCode, setInviteCode ] = useState();
+    let [ role, setRole ] = useState();
     const submitRegister = (e)=>{
         e.preventDefault();
         //verify password is secure
@@ -20,6 +22,8 @@ const Register = props=>{
                 "username": username,
                 "password": password,
                 "confirmedPassword": confirmedPassword,
+                "invite" : inviteCode,
+                "role" : role
             }),
         }).then((res) => {
 
@@ -57,6 +61,21 @@ const Register = props=>{
                     Confirm password:<br />
                     <input type="password" onChange={e=>setConfirmedPassword(e.target.value)}></input>
                 </label>
+                <label className="d-block p-2">
+                    Invite Code (Optional):<br />
+                    <input type="text" onChange={e=>setInviteCode(e.target.value)}></input>
+                </label>
+                {inviteCode ?
+                <label>
+                    Role: <br />
+                    <select onChange={e=>setRole(e.target.value)}>
+                        <option value={"USER"}>User</option>
+                        <option value={"MODERATOR"}>Moderator</option>
+                        <option value={"ADMIN"}>Admin</option>
+                    </select>
+                </label> 
+                 : 
+                 <></>}
                 <button className="btn btn-primary p-2 m-2">Submit</button>
             </form>
         </div>
