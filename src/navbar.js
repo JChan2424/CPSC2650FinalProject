@@ -43,7 +43,7 @@ const Navbar = props => {
     }
 
     let searchForTerm = async (term) => {
-      let url = encodeURI(`/api/search/:${term}`)
+      let url = encodeURI(`/api/search/${term}`)
       console.log("url", url);
       let results = await fetch(url);
       return results.json();
