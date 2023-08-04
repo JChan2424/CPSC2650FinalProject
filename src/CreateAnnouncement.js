@@ -30,7 +30,7 @@ const CreateAnnouncement = props=>{
                     let author;
                     res.json().then(data=>{
                         author = data.username;
-                        if (data.role === "ADMIN" || data.role === "MODERATOR"){
+                        if (data.role === "ADMIN" || data.role === "MODERATOR" || data.role === "USER"){
                             fetch("/api/announcements", {
                                 method: "POST",
                                 headers: {
