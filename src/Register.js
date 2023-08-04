@@ -1,7 +1,7 @@
 import React from "react";
 
 const { useState, useEffect } = React;
-
+import { Link, useNavigate } from "react-router-dom";
 const Register = props=>{
     let [ username, setUsername ] = useState();
     let [ password, setPassword ] = useState();
@@ -44,7 +44,7 @@ const Register = props=>{
     }
 
     return (
-        <div className="card d-inline-block">
+        <div className="card d-inline-block ms-2">
             <h5 className="card-title p-2">Register</h5>
             <form onSubmit={e=>submitRegister(e)}> 
                 <label className="d-block p-2">
@@ -78,6 +78,13 @@ const Register = props=>{
                  <></>}
                 <button className="btn btn-primary p-2 m-2">Submit</button>
             </form>
+            <Link
+                  to={"/login"}
+                  state={{ test: "test" }}
+                  className="btn btn-primary m-2"
+                >
+                  Have an account? Log in here.
+                </Link>
         </div>
     );
 }
