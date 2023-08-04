@@ -6,7 +6,7 @@ const Weather = props => {
     let url = `https://api.openweathermap.org/data/3.0/onecall?`
     let urlParams = '&exclude=minutely,hourly,daily,alerts&units=metric&appid='
     // lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${APIKey}`
-    let APIKey = '4dd47ed21e20bd1fa1893e2502ce3ef0';
+    let APIKey = '4dd47ed21e20bd1fa1893e2502ce3ef0'; //use models/config/config.js
     
     const testData =                 
     {
