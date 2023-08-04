@@ -70,6 +70,7 @@ function Login() {
             }}
           />
         </form>
+        <Link to={"/register"} className="btn btn-primary">No account? sign up here</Link>
       </div>
     );
   }
