@@ -7,6 +7,7 @@ import "../views/css/united.min.css";
 import App from './App.js';
 import Login from './Login';
 import Register from './Register';
+import CreateAnnouncement from './CreateAnnouncement'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Body from './body';
 
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
             {
                 path: "/announcements",
                 element: <Body />
+            },
+            {
+                path: "/create-announcement",
+                element: <CreateAnnouncement />
             }
 
         ]

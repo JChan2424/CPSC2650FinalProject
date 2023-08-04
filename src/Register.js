@@ -45,8 +45,6 @@ const Register = props=>{
                 //redirect to login page
                 navigate("/login", {replace: true})
             }
-        }, cause=>{
-            console.log("promise rejected cause", cause)
         })
         .catch(err=>{
             console.log("register err", err);
