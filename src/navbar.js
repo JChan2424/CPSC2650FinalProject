@@ -66,7 +66,7 @@ const Navbar = (props) => {
       setSearchedPosts(response.data);
       setSearchStatus(true);
       setTerm("");
-      navigate("/announcements", {
+      navigate("/view-announcements", {
         state: { searchStatus: true, searchedPosts: searchedPosts },
         replace: true,
       });
@@ -77,7 +77,7 @@ const Navbar = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     props.setAppRole("NONE");
-    navigate("/announcements", {
+    navigate("/view-announcements", {
       state: { searchedPosts: searchedPosts, searchStatus: searchStatus },
       replace: true,
     });
@@ -108,7 +108,7 @@ const Navbar = (props) => {
               <li className="nav-item">
                 {/* <a className="nav-link active" aria-current="page" href="/">Home</a> */}
                 <Link
-                  to={"/announcements"}
+                  to={"/view-announcements"}
                   state={{
                     searchedPosts: searchedPosts,
                     searchStatus: searchStatus,

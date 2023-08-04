@@ -45,7 +45,7 @@ const CreateAnnouncement = props=>{
                             })
                             .then(res=>{
                                 if (res.status === 200) {
-                                    navigate('/announcements', {state:{searchStatus: false}, replace: true});
+                                    navigate('/view-announcements', {state:{searchStatus: false}, replace: true});
                                 } else {
                                     //go to error (server error)
                                 }

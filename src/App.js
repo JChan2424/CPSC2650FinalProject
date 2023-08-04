@@ -12,7 +12,7 @@ const App = props => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        navigate("/announcements");
+        navigate("/view-announcements");
     }, []);
     return (
         <>

@@ -1,16 +1,30 @@
 const util = require('../models/util.js')
 const express = require('express')
+const config = require('../server/config/config.js');
+
 const homeController = express.Router()
+
+const options = {
+    root: config.ROOT
+};
+
 homeController.get('/', util.logRequest, (req,res) => {
     res.sendFile('index.html')
 })
 homeController.get('/index.html', util.logRequest, (req,res) => {
-    res.sendFile('index.html')
+    res.sendFile('index.html', options)
 })
-homeController.get('/index.html',util.logRequest, (req,res) => {
-    res.sendFile('index.html')
+homeController.get('/view-announcements',util.logRequest, (req,res) => {
+    res.sendFile('/index.html', options)
 })
-homeController.get('/about',util.logRequest, (req,res) => {
-    res.sendFile('about.html')
+homeController.get('/login',util.logRequest, (req,res) => {
+    res.sendFile('/index.html', options)
 })
+homeController.get('/register',util.logRequest, (req,res) => {
+    res.sendFile('/index.html', options)
+})
+homeController.get('/create-announcement',util.logRequest, (req,res) => {
+    res.sendFile('/index.html', options)
+})
+
 module.exports = homeController

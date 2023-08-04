@@ -36,7 +36,7 @@ const Login = props=>{
                     console.log(data);
                 localStorage.setItem("token", data.token);
                 setAppRole(data.role);
-                navigate("/announcements", {state: {posts: data.posts} , replace: true });
+                navigate("/view-announcements", {state: {posts: data.posts} , replace: true });
                 })
                 
 
