@@ -143,7 +143,7 @@ const Navbar = (props) => {
                 </Link>}
               </li>
               <li className="nav-item">
-                {role != 'NONE' ? <p className="nav-link active">You are: {role}</p> : <Link
+                {props.appRole != 'NONE' ? <p className="nav-link active">Welcome {props.appRole}!</p> : <Link
                   to={"/login"}
                   state={{ test: "test" }}
                   className="nav-link active"
@@ -169,6 +169,7 @@ const Navbar = (props) => {
                 Search
               </button>
             </form>
+            {console.log(props.appRole)}
             {props.appRole === "NONE" ? (
               <>
                 <Link
@@ -184,17 +185,19 @@ const Navbar = (props) => {
               </>
             ) : (
               <>
+              {console.log(props.appRole === "ADMIN" || props.appRole === "MODERATOR")}
+              {console.log(props.appRole)}
                 <button
-                  className="btn btn-outline-success"
-                  onClick={e=>{navigate('/create-announcement', {replace: true})}}
+                  className="btn btn-outline-secondary ms-1"
+                  onClick={e=>{navigate('/create-announcement', {replace: true})}} hidden={props.appRole === "USER"}
                 >
-                  Create Announcement
+                  Make Post
                 </button>
                 <button
-                  className="btn btn-outline-success"
+                  className="btn btn-primary ms-1"
                   onClick={logout}
                 >
-                  LogOut
+                  Log Out
                 </button>
               </>
               
