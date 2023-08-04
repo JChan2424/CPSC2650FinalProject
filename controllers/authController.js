@@ -26,6 +26,8 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
         return res.json({ success: false, message: "Passwords do not match" });
     }
 
+    let collection = client.db().collection("Users");
+
     let result = await collection.findOne({ username: username });
 
     if (result != null) {
@@ -44,12 +46,12 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
         user = new User(username, hashedPassword, "USER");
     }
 
-    let collection = client.db().collection("Users");
+    
 
     try {
         await util.insertOne(collection, user);
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "User created",
         });

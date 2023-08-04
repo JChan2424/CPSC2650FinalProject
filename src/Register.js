@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const { useState, useEffect } = React;
 
@@ -8,6 +9,8 @@ const Register = props=>{
     let [ confirmedPassword, setConfirmedPassword ] = useState();
     let [ inviteCode, setInviteCode ] = useState();
     let [ role, setRole ] = useState();
+    let navigate = useNavigate();
+
     const submitRegister = (e)=>{
         e.preventDefault();
         //verify password is secure
@@ -24,9 +27,10 @@ const Register = props=>{
                 "confirmedPassword": confirmedPassword,
                 "invite" : inviteCode,
                 "role" : role
-            }),
-        }).then((res) => {
-
+            })
+        })
+        .then(res => {
+            console.log("register apicall status", res.status);
             if (res.status === 400) {
 
                 //alert: invalid request, try again
@@ -39,7 +43,13 @@ const Register = props=>{
 
             if (res.status === 200) {
                 //redirect to login page
+                navigate("/login", {replace: true})
             }
+        }, cause=>{
+            console.log("promise rejected cause", cause)
+        })
+        .catch(err=>{
+            console.log("register err", err);
         });
     }
 
