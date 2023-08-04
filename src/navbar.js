@@ -116,7 +116,7 @@ const Navbar = (props) => {
                     searchedPosts: searchedPosts,
                     searchStatus: searchStatus,
                   }}
-                  className="nav-link-active, text-white"
+                  className="nav-link active"
                 >
                   Home
                 </Link>
@@ -131,16 +131,28 @@ const Navbar = (props) => {
                 </a>
               </li>
               <li className="nav-item">
-                <a
+                {role != 'NONE' ? <a
                   className="nav-link active"
                   aria-current="page"
                   href="/"
                 >
                   My Feed
-                </a>
+                </a> : <Link
+                  to={"/login"}
+                  state={{ test: "test" }}
+                  className="nav-link active"
+                >
+                  My Feed
+                </Link>}
               </li>
               <li className="nav-item">
-                <p>You are: {role}</p>
+                {role != 'NONE' ? <p className="nav-link active">You are: {role}</p> : <Link
+                  to={"/login"}
+                  state={{ test: "test" }}
+                  className="nav-link active"
+                >
+                  You are not signed in
+                </Link>}
               </li>
             </ul>
             <form className="d-flex" role="search">
@@ -164,11 +176,11 @@ const Navbar = (props) => {
                 <Link
                   to={"/login"}
                   state={{ test: "test" }}
-                  className="text-white"
+                  className="btn btn-primary ms-1"
                 >
                   Log In
                 </Link>
-                <Link to={"/register"} className="text-white">
+                <Link to={"/register"} className="btn btn-primary">
                   Sign Up
                 </Link>
               </>
