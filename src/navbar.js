@@ -15,7 +15,7 @@ const Navbar = (props) => {
 
     if (!token || token == "undefined") {
 
-      setRole("NONE");
+      props.setAppRole("NONE");
       console.log("no token");
 
     } else {
@@ -29,12 +29,12 @@ const Navbar = (props) => {
         .then((res) => {
           if (res.status === 200) {
             res.json().then((data) => {
-              setRole(data.role);
+              props.setAppRole(data.role);
             });
           } else {
             localStorage.removeItem("token"); // clear the token and need to prompt user to login again
 
-            setRole("NONE");
+            props.setAppRole("NONE");
           }
         })
         .catch((err) => console.log(err));
@@ -76,7 +76,7 @@ const Navbar = (props) => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    setRole("NONE");
+    props.setAppRole("NONE");
     navigate("/announcements", {
       state: { searchedPosts: searchedPosts, searchStatus: searchStatus },
       replace: true,
@@ -150,6 +150,7 @@ const Navbar = (props) => {
                 >
                   You are not signed in
                 </Link>}
+
               </li>
             </ul>
             <form className="d-flex" role="search">
@@ -168,7 +169,7 @@ const Navbar = (props) => {
                 Search
               </button>
             </form>
-            {role === "NONE" ? (
+            {props.appRole === "NONE" ? (
               <>
                 <Link
                   to={"/login"}

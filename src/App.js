@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 const App = props => {
     const [posts, setPosts] = useState();
     const [search, setSearchStatus] = useState(false);
+    const [appRole, setAppRole] = useState();
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -16,12 +17,10 @@ const App = props => {
     return (
         <>
             <div >
-            <Navbar posts={posts} setPosts={setPosts} search={search} setSearchStatus={setSearchStatus}/>
-                    <div id="login">
-                        <Outlet />
+            <Navbar posts={posts} setPosts={setPosts} search={search} setSearchStatus={setSearchStatus} appRole={appRole} setAppRole={setAppRole} />
+                    <div>
+                        <Outlet context={[appRole, setAppRole]}/>
                     </div>
-                {/* <Body posts={posts} setPosts={setPosts} /> */}
-
                 <Footer />
             </div>
         </>

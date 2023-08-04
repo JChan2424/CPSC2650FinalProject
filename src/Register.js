@@ -1,8 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 const { useState, useEffect } = React;
-import { Link, useNavigate } from "react-router-dom";
 const Register = props=>{
     let [ username, setUsername ] = useState();
     let [ password, setPassword ] = useState();

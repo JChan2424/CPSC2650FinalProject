@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation, useOutletContext } from "react-router";
 import { Link } from "react-router-dom";
 
 const Login = props=>{
-    let [ username, setUsername ] = useState();
-    let [ password, setPassword ] = useState();
+    const [ username, setUsername ] = useState();
+    const [ password, setPassword ] = useState();
+    const [ appRole, setAppRole] = useOutletContext();
     const navigate = useNavigate();
     const location = useLocation();
     const testStateTwo=location.state?.test;
@@ -34,8 +35,7 @@ const Login = props=>{
                 res.json().then(data=>{
                     console.log(data);
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("username", data.username);
-                localStorage.setItem("role", data.role);
+                setAppRole(data.role);
                 navigate("/announcements", {state: {posts: data.posts} , replace: true });
                 })
                 

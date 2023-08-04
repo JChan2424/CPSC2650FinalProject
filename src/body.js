@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useOutletContext } from "react-router";
 import Weather from "./weather";
 import Posts from "./posts";
 
@@ -7,6 +7,7 @@ import Posts from "./posts";
 
 const Body = props => {
   let [ posts, setPosts ] = useState();
+  const [ appRole, setAppRole ] = useOutletContext();
   const location = useLocation();
   const navigate = useNavigate();
   let searchStatus = location.state?.searchStatus;
@@ -23,11 +24,7 @@ const Body = props => {
   }
 
     useEffect(() => {
-      
-     
-      
-        // check if credentials are in local storage
-        
+        // check if credentials are in local storage       
         if (localStorage.getItem("token") === null) {
           // if not, redirect to login page
         //   window.location.href = "/login?redirect=" + window.location.pathname;
@@ -61,7 +58,7 @@ const Body = props => {
         
         // props.setPostArray(getMostRecentPosts());
         // console.log(props.postArray)
-      }, []);
+      },[]);
       let goBackToAll = (event) => {
         event.preventDefault();
         navigate("/announcements", {state:{searchStatus: false}, replace: true});
@@ -83,8 +80,9 @@ const Body = props => {
                         </div>
                         <div className="col-8 card me-4" style={{ minWidth: 25 + '%' }}>
                             {!searchStatus ? 
+
                                 <><div className="card-header"><h2>Recent Posts</h2></div>
-                                <Posts posts={posts} /></>
+                                <Posts posts={posts} appRole={appRole}/></>
                                 :<> 
                                 <div className="card-header"><h3>Search Results</h3></div>
                                 {searchedPosts.length > 0 ? <Posts posts={searchedPosts} /> : <><p>No posts match your search term.</p></>}
