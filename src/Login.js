@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate, useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
 const Login = props=>{
     let [ username, setUsername ] = useState();
@@ -47,7 +48,7 @@ const Login = props=>{
     }
 
     return (
-        <div className="card d-inline-block">
+        <div className="card d-inline-block ms-2">
             <h5 className="card-title p-2">Login</h5>
             <form onSubmit={e=>submitLogin(e)}> 
                 <label className="d-block p-2">
@@ -61,6 +62,7 @@ const Login = props=>{
                 </label>
                 <button className="btn btn-primary p-2 m-2">Submit</button>
             </form>
+            <Link to={"/register"} className="btn btn-primary m-2">No account? Sign up here.</Link>
         </div>
     );
 }
