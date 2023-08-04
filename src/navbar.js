@@ -11,8 +11,6 @@ const Navbar = (props) => {
 
   useEffect(() => {
     // check if credentials are in local storage
-    console.log("navbar useEffect");
-
     const token = localStorage.getItem("token");
 
     if (!token || token == "undefined") {
@@ -32,7 +30,6 @@ const Navbar = (props) => {
           if (res.status === 200) {
             res.json().then((data) => {
               setRole(data.role);
-              localStorage.setItem("username", data.username); // don't know if we need to store the username? can probably just use a state @KieranQLee @JChan2424
             });
           } else {
             localStorage.removeItem("token"); // clear the token and need to prompt user to login again
@@ -185,12 +182,21 @@ const Navbar = (props) => {
                 </Link>
               </>
             ) : (
-              <button
-                className="btn btn-outline-success"
-                onClick={logout}
-              >
-                LogOut
-              </button>
+              <>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={e=>{navigate('/create-announcement', {replace: true})}}
+                >
+                  Create Announcement
+                </button>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={logout}
+                >
+                  LogOut
+                </button>
+              </>
+              
             )}
           </div>
         </div>
