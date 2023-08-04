@@ -28,15 +28,30 @@ const Posts = props => {
     // TODO: Style the posts
     
     // TODO: Add API request for getting Topics for the topics bar
+    
     return (
         <>
             {console.log("localposts", props.posts)}
-            {props.posts ? (props.posts.map(post=>(<div className="card" key={post._id}>
-                    <div className="card-title" >{post.title}</div>
-                    <div className="card-body"><p>Topic: {post.topic}</p></div>
-                    <div className="card-body overflow-scroll">{post.message}</div>
-                </div>))
+            
+            {props.posts ? (props.posts.map(post=>(
+                <>
+                <br />
+                {console.log(post)}
+                <div className="card" key={post._id}>
+                    {console.log(post._id)}
+                        <div className="card-title bg-primary">
+                            <h3 className="text-start ms-2 mt-2 " >{post.title}</h3>
+                        </div>
+                        <div className="card-body ">
+                            <p className="text-start">Topic: {post.topic}</p>
+                            <p className="text-start">Posted at: {post.createdAt}</p>
+                            <hr />
+                            <p className="text-start">{post.message}</p>
+                        </div>                    
+                </div>
+            </>))
             ):(<p>Loading posts</p>)}
+            <br />
         </>
     );
 }
