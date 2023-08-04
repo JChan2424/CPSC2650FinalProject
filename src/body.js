@@ -83,12 +83,12 @@ const Body = props => {
                         </div>
                         <div className="col-8 card me-4" style={{ minWidth: 25 + '%' }}>
                             {!searchStatus ? 
-                                <><div className="card-header"><h3>Recent Posts</h3></div>
+                                <><div className="card-header"><h2>Recent Posts</h2></div>
                                 <Posts posts={posts} /></>
                                 :<> 
                                 <div className="card-header"><h3>Search Results</h3></div>
                                 {searchedPosts.length > 0 ? <Posts posts={searchedPosts} /> : <><p>No posts match your search term.</p></>}
-                                <button className="btn btn-primary" onClick={goBackToAll}>Go back to all posts</button>
+                                <button className="btn btn-primary" onClick={goBackToAll}>Go back to all posts</button><br />
                             </>}
                         </div>
                         <div className="col card bg-primary d-sm-block">
