@@ -78,9 +78,9 @@ const Posts = (props) => {
         <>
             {props.posts ? (
                 props.posts.map((post) => (
-                    <>
+                    <div key={post._id}>
                         <br />
-                        <div className="card" key={post._id}>
+                        <div className="card">
                             <div className="card-title bg-primary">
                                 <h3 className="text-start ms-2 mt-2 ">
                                     {post.title}
@@ -118,7 +118,7 @@ const Posts = (props) => {
                                 )}
                             </div>
                         </div>
-                    </>
+                    </div>
                 ))
             ) : (
                 <p>Loading posts</p>
