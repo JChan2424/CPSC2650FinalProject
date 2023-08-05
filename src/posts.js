@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react"; 
 import { useNavigate } from "react-router"; 
 
-
-
 const Posts = props => {
     const [loadStatus, setLoadStatus] = useState([]);
     let [ localPosts, setLocalPosts] = useState();
     const navigate = useNavigate();
-    
+    let localDate;
+    let postsWithLocalizedDates = [];
+    if (props.posts) {
+        postsWithLocalizedDates = props.posts.map(post => {
+            let localDate = new Date(post.createdAt);
+            post.localDate = localDate.toLocaleString();
+        })
+        
+    }
     // setLoadStatus('loading');
     // console.log(`${loadStatus}`)
     // let getMostRecentPosts = async () => {
@@ -76,20 +82,25 @@ const Posts = props => {
 
     return (
         <>
+            
             {props.posts ? (props.posts.map(post=>(
+                <>
+                <br />
                 <div className="card" key={post._id}>
                     <div className="card-title bg-primary" >
                         <h3 className="text-start ms-2 mt-2 " >{post.title}</h3>
                     </div>
                     <div className="card-body">
-                    <p className="text-start">Topic: {post.topic}</p>
-                            <p className="text-start">Posted at: {post.createdAt}</p>
-                            <hr />
-                            <p className="text-start">{post.message}</p>
-                            {props.appRole === "ADMIN" ? <><br /><button className="btn btn-primary" onClick={e=>{deleteAnnouncecment(e, post._id)}}>Delete Announcement</button></> : <></>}
+                    <div className="text-start">Topic: {post.topic}</div>
+                    <div className="text-start">Posted at: {post.localDate}</div>
+                    <div className="text-start">Posted by: {post.author}</div>
+                    <hr />
+                    <p className="text-start">{post.message}</p>
+                    {props.appRole === "ADMIN" ? <><br /><button className="btn btn-primary" onClick={e=>{deleteAnnouncecment(e, post._id)}}>Delete Announcement</button></> : <></>}
                     </div>
                     
-                </div>))
+                </div>
+                </>))
 
             ):(<p>Loading posts</p>)}
             <br />
