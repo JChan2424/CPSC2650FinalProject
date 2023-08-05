@@ -61,10 +61,12 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
         .digest("hex");
 
     // Create new user instance
-    let user =
-        invite == config.INVITE
-            ? new User(username, hashedPassword, role)
-            : new User(username, hashedPassword, "USER");
+
+    if (invite != config.INVITE_CODE) {
+        return res.status(401).json({ success: false, message: "Invalid invite code" });
+    }
+    
+    let user =new User(username, hashedPassword, role)
 
     // Attempt to insert the new user into the database
     try {

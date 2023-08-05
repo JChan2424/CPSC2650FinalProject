@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./navbar.js";
-import Footer from "./footer.js";
+import Navbar from "./components/Navbar.js";
+import Footer from "./components/Footer.js";
 import { Outlet } from "react-router";
 import { useNavigate } from "react-router";
 
@@ -14,6 +14,7 @@ const App = (props) => {
     useEffect(() => {
         navigate("/view-announcements");
     }, []);
+    
     return (
         <>
             <div>

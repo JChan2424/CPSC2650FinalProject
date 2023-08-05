@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 const Topics = (props) => {
+    
     let getMostRecentPosts = async () => {
         let results = await fetch(`../api/announcements/last/:10`);
         return results.json();

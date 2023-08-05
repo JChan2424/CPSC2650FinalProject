@@ -86,35 +86,55 @@ const CreateAnnouncement = (props) => {
 
     return (
         <div className="card d-inline-block">
-            <h5 className="card-title p-2">Create new Announcement</h5>
+            <h5 className="card-title p-2" id="create-announcement-title">
+                Create new Announcement
+            </h5>
             <form onSubmit={(e) => submitAnnouncement(e)}>
-                <label className="d-block p-2">
+                <label className="d-block p-2" for="topic">
                     Topic:
                     <br />
                     <input
+                        id="topic"
                         type="text"
                         onChange={(e) => setTopic(e.target.value)}
+                        aria-label="Topic"
+                        aria-required="true"
+                        tabIndex="0"
                     ></input>
                 </label>
 
-                <label className="d-block p-2">
+                <label className="d-block p-2" for="title">
                     Title:
                     <br />
                     <input
+                        id="title"
                         type="text"
                         onChange={(e) => setTitle(e.target.value)}
+                        aria-label="Title"
+                        aria-required="true"
+                        tabIndex="0"
                     ></input>
                 </label>
 
-                <label className="d-block p-2">
+                <label className="d-block p-2" for="content">
                     Content:
                     <br />
                     <textarea
+                        id="content"
                         onChange={(e) => setMessage(e.target.value)}
+                        aria-label="Content"
+                        aria-required="true"
+                        tabIndex="0"
                     ></textarea>
                 </label>
 
-                <button className="btn btn-primary p-2 m-2">Submit</button>
+                <button
+                    className="btn btn-primary p-2 m-2"
+                    aria-label="Submit new announcement"
+                    tabIndex="0"
+                >
+                    Submit
+                </button>
             </form>
         </div>
     );

@@ -54,28 +54,49 @@ const Login = (props) => {
 
     return (
         <div className="card d-inline-block ms-2">
-            <h5 className="card-title p-2">Login</h5>
+            <h5 className="card-title p-2" id="login-title">
+                Login
+            </h5>
             <form onSubmit={(e) => submitLogin(e)}>
-                <label className="d-block p-2">
+                <label className="d-block p-2" for="username">
                     Enter username:
                     <br />
                     <input
+                        id="username"
                         type="text"
                         onChange={(e) => setUsername(e.target.value)}
+                        aria-label="Enter username"
+                        aria-required="true"
+                        tabIndex="0"
                     ></input>
                 </label>
 
-                <label className="d-block p-2">
+                <label className="d-block p-2" for="password">
                     Enter password:
                     <br />
                     <input
+                        id="password"
                         type="password"
                         onChange={(e) => setPassword(e.target.value)}
+                        aria-label="Enter password"
+                        aria-required="true"
+                        tabIndex="0"
                     ></input>
                 </label>
-                <button className="btn btn-primary p-2 m-2">Submit</button>
+                <button
+                    className="btn btn-primary p-2 m-2"
+                    aria-label="Submit Login"
+                    tabIndex="0"
+                >
+                    Submit
+                </button>
             </form>
-            <Link to={"/register"} className="btn btn-primary m-2">
+            <Link
+                to={"/register"}
+                className="btn btn-primary m-2"
+                aria-label="No account? Sign up here."
+                tabIndex="0"
+            >
                 No account? Sign up here.
             </Link>
         </div>

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
     let [term, setTerm] = useState();
-    let [role, setRole] = useState();
     let [searchedPosts, setSearchedPosts] = useState();
     let [searchStatus, setSearchStatus] = useState();
     let navigate = useNavigate();
@@ -62,7 +61,7 @@ const Navbar = (props) => {
             setSearchStatus(true);
             setTerm("");
             navigate("/view-announcements", {
-                state: { searchStatus: true, searchedPosts: searchedPosts },
+                state: { searchStatus: true, searchedPosts: response.data },
                 replace: true,
             });
         }
@@ -172,7 +171,6 @@ const Navbar = (props) => {
                                 Search
                             </button>
                         </form>
-                        {console.log(props.appRole)}
                         {props.appRole === "NONE" ? (
                             <>
                                 <Link
@@ -191,11 +189,6 @@ const Navbar = (props) => {
                             </>
                         ) : (
                             <>
-                                {console.log(
-                                    props.appRole === "ADMIN" ||
-                                        props.appRole === "MODERATOR"
-                                )}
-                                {console.log(props.appRole)}
                                 <button
                                     className="btn btn-outline-secondary ms-1"
                                     onClick={(e) => {
