@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
     let [term, setTerm] = useState();
-    let [role, setRole] = useState();
     let [searchedPosts, setSearchedPosts] = useState();
     let [searchStatus, setSearchStatus] = useState();
     let navigate = useNavigate();

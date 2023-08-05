@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router";
 
 const Posts = (props) => {
     const navigate = useNavigate();
-    const [appRole, setAppRole, errMessage, setErrMessage] = useOutletContext();
+    const [, setAppRole, , setErrMessage] = useOutletContext();
 
     if (props.posts) {
         props.posts.map((post) => {

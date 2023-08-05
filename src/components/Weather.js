@@ -4,7 +4,7 @@ const Weather = (props) => {
     let [langaraWeather, setLangaraWeather] = useState();
     let [userWeather, setUserWeather] = useState();
     let url = `https://api.openweathermap.org/data/2.5/weather`;
-    let config = require("../models/config/config");
+    let config = require("../../models/config/config");
 
     const testData = {
         coord: { lon: -123.1088, lat: 49.2245 },

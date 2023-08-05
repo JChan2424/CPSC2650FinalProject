@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useOutletContext } from "react-router";
 import { Link } from "react-router-dom";
-import Weather from "./weather";
-import Posts from "./posts";
+import Weather from "./Weather";
+import Posts from "./Posts";
 
 const Body = (props) => {
     let [posts, setPosts] = useState();

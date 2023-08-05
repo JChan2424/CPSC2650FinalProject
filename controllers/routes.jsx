@@ -1,40 +1,51 @@
 const React = require("react");
 
-import App from '../src/App';
-import Login from '../src/Login';
-import Register from '../src/Register';
-import CreateAnnouncement from '../src/CreateAnnouncement'
-import Body from '../src/body';
-import Error from '../src/Error'
+import App from "../src/App";
+import Login from "../src/components/Login";
+import Register from "../src/components/Register";
+import CreateAnnouncement from "../src/components/CreateAnnouncement";
+import Body from "../src/components/Body";
+import Error from "../src/components/Error";
 
 const routes = [
     {
         path: "/",
-        Component() { return <App/> } ,
+        Component() {
+            return <App />;
+        },
         children: [
             {
                 path: "/login",
-                Component() {return <Login />}
+                Component() {
+                    return <Login />;
+                },
             },
             {
                 path: "/register",
-                Component()  {return <Register />}
+                Component() {
+                    return <Register />;
+                },
             },
             {
                 path: "/view-announcements",
-                Component()  {return <Body />}
+                Component() {
+                    return <Body />;
+                },
             },
             {
                 path: "/create-announcement",
-                Component()  {return <CreateAnnouncement />}
-            }, 
+                Component() {
+                    return <CreateAnnouncement />;
+                },
+            },
             {
                 path: "/error",
-                Component() {return <Error />}
-            }
-
-        ]
-    }
-]
+                Component() {
+                    return <Error />;
+                },
+            },
+        ],
+    },
+];
 
 export default routes;
