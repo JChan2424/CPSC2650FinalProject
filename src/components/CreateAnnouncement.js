@@ -195,6 +195,7 @@ const CreateAnnouncement = (props) => {
                         aria-label="Topic"
                         aria-required="true"
                         tabIndex="0"
+                        required
                     ></input>
                 </label>
 
@@ -209,6 +210,7 @@ const CreateAnnouncement = (props) => {
                         aria-label="Title"
                         aria-required="true"
                         tabIndex="0"
+                        required
                     ></input>
                 </label>
 
@@ -222,6 +224,7 @@ const CreateAnnouncement = (props) => {
                         aria-label="Content"
                         aria-required="true"
                         tabIndex="0"
+                        required
                     ></textarea>
                 </label>
 

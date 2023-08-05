@@ -58,6 +58,7 @@ const Register = (props) => {
                     <input
                         type="text"
                         onChange={(e) => setUsername(e.target.value)}
+                        required
                     ></input>
                 </label>
 
@@ -67,6 +68,7 @@ const Register = (props) => {
                     <input
                         type="password"
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     ></input>
                 </label>
 
@@ -76,6 +78,7 @@ const Register = (props) => {
                     <input
                         type="password"
                         onChange={(e) => setConfirmedPassword(e.target.value)}
+                        required
                     ></input>
                 </label>
                 <label className="d-block p-2">

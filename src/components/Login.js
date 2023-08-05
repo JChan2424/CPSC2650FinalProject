@@ -68,6 +68,7 @@ const Login = (props) => {
                         aria-label="Enter username"
                         aria-required="true"
                         tabIndex="0"
+                        required
                     ></input>
                 </label>
 
@@ -81,6 +82,7 @@ const Login = (props) => {
                         aria-label="Enter password"
                         aria-required="true"
                         tabIndex="0"
+                        required
                     ></input>
                 </label>
                 <button
