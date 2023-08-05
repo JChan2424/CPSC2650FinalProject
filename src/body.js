@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router";
+import { Link } from "react-router-dom";
 import Weather from "./weather";
 import Posts from "./posts";
 
@@ -86,7 +87,7 @@ const Body = props => {
                                 :<> 
                                 <div className="card-header"><h3>Search Results</h3></div>
                                 {searchedPosts.length > 0 ? <Posts posts={searchedPosts} /> : <><p>No posts match your search term.</p></>}
-                                <button className="btn btn-primary" onClick={goBackToAll}>Go back to all posts</button><br />
+                                <Link to={"/view-announcements"} className="btn btn-primary">Go back to all posts</Link><br />
                             </>}
                         </div>
                         <div className="col card bg-primary d-sm-block">
