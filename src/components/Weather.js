@@ -58,11 +58,11 @@ const Weather = (props) => {
             config.API_KEY;
         setUserWeather(testData.main.temp);
         // Uncomment the following to use API data
-        /*
+        
         userWeather = await fetch(userURL);
         userWeather = await userWeather.json();
         setUserWeather(userWeather.main.temp);
-        */
+        
     };
 
     const updateLangaraWeather = async () => {
@@ -77,13 +77,13 @@ const Weather = (props) => {
             lon +
             "&units=metric&appid=" +
             config.API_KEY;
-        setLangaraWeather(testData.main.temp);
+        // setLangaraWeather(testData.main.temp);
         // Uncomment the following to use API data
-        /*
+        
         langaraWeather = await fetch(langaraURL);
         langaraWeather = await langaraWeather.json();
         setLangaraWeather(langaraWeather.main.temp);
-        */
+        
     };
     useEffect(() => {
         updateLangaraWeather();
