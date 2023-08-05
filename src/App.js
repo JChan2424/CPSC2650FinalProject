@@ -18,7 +18,7 @@ const App = props => {
         <>
             <div >
             <Navbar posts={posts} setPosts={setPosts} search={search} setSearchStatus={setSearchStatus} appRole={appRole} setAppRole={setAppRole} />
-                    <div className="d-flex justify-content-center">
+                    <div >
                         <Outlet context={[appRole, setAppRole]}/>
                     </div>
                 <Footer />
