@@ -31,7 +31,7 @@ const Body = (props) => {
             <main>
                 <div className="container text-center bg-secondary">
                     <div className="row">
-                        <div
+                        {/* <div
                             className="col-2 card me-4 d-none d-sm-block bg-primary"
                             role="complementary"
                         >
@@ -46,7 +46,7 @@ const Body = (props) => {
                                 aria-labelledby="topics-header"
                                 tabIndex="0"
                             ></div>
-                        </div>
+                        </div> */}
                         <div
                             className="col-8 card me-4"
                             style={{ minWidth: 25 + "%" }}
@@ -101,7 +101,7 @@ const Body = (props) => {
                             )}
                         </div>
                         <div
-                            className="col card bg-primary d-sm-block"
+                            className="col flex card bg-primary d-md-block"
                             role="complementary"
                         >
                             <div
