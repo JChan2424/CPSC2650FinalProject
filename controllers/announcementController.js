@@ -66,25 +66,6 @@ announcementController.get(
     }
 );
 
-// Get announcements by topic
-announcementController.get(
-    "/api/announcements/topic/:topic",
-    util.logRequest, // Middleware to log the request
-    async (req, res, next) => {
-        // Get the Announcements collection from MongoDB
-        let collection = client.db().collection("Announcements");
-
-        // Log the requested topic
-        // console.log("Requested: " + req.params.topic);
-
-        // Find all announcements with the requested topic and return them
-        let announcement = await util.find(collection, {
-            topic: req.params.topic.toLowerCase(),
-        });
-        res.status(200).json(announcement);
-    }
-);
-
 // Get the last X announcements
 announcementController.get(
     "/api/announcements/last/:count",
@@ -129,7 +110,6 @@ announcementController.post(
 // Update an announcement by ID
 announcementController.put(
     "/api/announcements/:id",
-    validateAnnoucement, // Middleware to validate the announcement data
     util.logRequest, // Middleware to log the request
     async (req, res, next) => {
         // Get the Announcements collection from MongoDB

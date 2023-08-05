@@ -19,7 +19,7 @@ authController.use(express.json());
 // Helper function to validate user input
 const verifyInput = (req, res, confirmPassword = false) => {
     const { username, password, confirmedPassword } = req.body;
-
+    
     // Check if username and password are provided
     if (!username || !password) {
         res.status(400);
@@ -60,14 +60,14 @@ authController.post("/api/register", util.logRequest, async (req, res) => {
         .update(password)
         .digest("hex");
 
-    // Create new user instance
 
+    // Check if invite code is valid
     if (invite != config.INVITE_CODE) {
         return res.status(401).json({ success: false, message: "Invalid invite code" });
     }
-    
-    let user =new User(username, hashedPassword, role)
 
+    // Create new user instance
+    let user = invite == config.INVITE_CODE ? new User(username, hashedPassword, role) : new User(username, hashedPassword);
     // Attempt to insert the new user into the database
     try {
         await util.insertOne(collection, user);
