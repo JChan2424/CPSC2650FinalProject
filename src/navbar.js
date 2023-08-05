@@ -122,7 +122,7 @@ const Navbar = (props) => {
                                 </a>
                             </li>
                             <li className="nav-item">
-                                {role != "NONE" ? (
+                                {props.appRole != "NONE" ? (
                                     <a
                                         className="nav-link active"
                                         aria-current="page"
