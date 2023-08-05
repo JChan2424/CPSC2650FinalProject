@@ -66,6 +66,16 @@
         if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
       });
   };
+  const updateOne = async (collection, filter, update) => {
+    return await collection
+      .updateOne(filter, update)
+      .then((res) => console.log("Data updated with ID", res.upsertedId))
+      .catch((err) => {
+        console.log("Could not update data ", err.message);
+        //For now, ingore duplicate entry errors, otherwise re-throw the error for the next catch
+        if (!(err.name === "BulkWriteError" && err.code === 11000)) throw err;
+      });
+  };
   //-------------------------------------------------------------------------
   const logRequest = async (req, res, next) => {
     const client = util.getMongoClient();
@@ -114,6 +124,7 @@
     find: find,
     insertOne: insertOne,
     insertMany: insertMany,
+    updateOne: updateOne,
     deleteOne: deleteOne,
     deleteMany: deleteMany,
     getMongoClient: getMongoClient,

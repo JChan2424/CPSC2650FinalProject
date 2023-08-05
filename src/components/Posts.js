@@ -74,6 +74,11 @@ const Posts = (props) => {
         }
     };
 
+    const updateAnnouncecment = (e, id, title, topic, message) => {
+        e.preventDefault();
+        navigate('/create-announcement', {state: {id: id, title: title, topic: topic, message: message}, replace: true});
+    }
+
     return (
         <>
             {props.posts ? (
@@ -97,10 +102,30 @@ const Posts = (props) => {
                                     Posted by: {post.author}
                                 </div>
                                 <hr />
-                                <p className="text-start">{post.message}</p>
+                                <p className="text-start">{post.message}</p> <br />
+                                {props.appRole === "MODERATOR" || props.appRole === "ADMIN" ? (
+                                    <>
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={(e) => {
+                                                updateAnnouncecment(
+                                                    e,
+                                                    post._id,
+                                                    post.title,
+                                                    post.topic,
+                                                    post.message
+                                                );
+                                            }}
+                                        >
+                                            Update Announcement
+                                        </button> &nbsp;
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
                                 {props.appRole === "ADMIN" ? (
                                     <>
-                                        <br />
+                                        
                                         <button
                                             className="btn btn-primary"
                                             onClick={(e) => {

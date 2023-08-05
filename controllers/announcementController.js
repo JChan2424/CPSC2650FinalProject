@@ -141,18 +141,19 @@ announcementController.put(
             return res.status(404).json({ message: 'Announcement not found' });
         }
 
-        // Create a new Announcement object
-        let ann = new Announcement(
-            req.body.title,
-            req.body.message,
-            req.body.topic,
-            req.body.author
-        );
+        // Create update filter
+        let newVals = {
+          $set: {
+            title: req.body.title,
+            topic: req.body.topic,
+            message: req.body.message
+          }
+        };
             
         // Update the announcement with the given ID and return the result
         let result = await util.updateOne(collection, {
-            _id: new ObjectId(req.params.id),
-        }, ann);
+            _id: new ObjectId(req.params.id)
+        }, newVals);
         res.status(200).json(result);
     }
 );
