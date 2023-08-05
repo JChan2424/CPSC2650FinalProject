@@ -4,8 +4,9 @@ import { useNavigate, useOutletContext } from "react-router";
 const Posts = (props) => {
     const navigate = useNavigate();
     const [appRole, setAppRole, errMessage, setErrMessage] = useOutletContext();
+
     if (props.posts) {
-        postsWithLocalizedDates = props.posts.map((post) => {
+        props.posts.map((post) => {
             let localDate = new Date(post.createdAt);
             post.localDate = localDate.toLocaleString();
         });

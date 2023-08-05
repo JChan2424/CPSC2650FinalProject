@@ -14,6 +14,7 @@ const App = (props) => {
     useEffect(() => {
         navigate("/view-announcements");
     }, []);
+    
     return (
         <>
             <div>
