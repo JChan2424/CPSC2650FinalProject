@@ -1,110 +1,129 @@
-import React, { useState, useEffect } from "react"; 
-import { useNavigate } from "react-router"; 
+import React from "react";
+import { useNavigate, useOutletContext } from "react-router";
 
-const Posts = props => {
-    const [loadStatus, setLoadStatus] = useState([]);
-    let [ localPosts, setLocalPosts] = useState();
+const Posts = (props) => {
     const navigate = useNavigate();
-    let localDate;
-    let postsWithLocalizedDates = [];
+    const [appRole, setAppRole, errMessage, setErrMessage] = useOutletContext();
     if (props.posts) {
-        postsWithLocalizedDates = props.posts.map(post => {
+        postsWithLocalizedDates = props.posts.map((post) => {
             let localDate = new Date(post.createdAt);
             post.localDate = localDate.toLocaleString();
-        })
-        
+        });
     }
-    // setLoadStatus('loading');
-    // console.log(`${loadStatus}`)
-    // let getMostRecentPosts = async () => {
-    //     let results = await fetch(`../api/announcements/last/:10`)
-    //     return results.json();
-    // };
-    // useEffect(() => {
-    //     (async () => {
-    //         let results = await getMostRecentPosts();
-    //         console.log(results)
-    //         location.state.posts = results
-    //         console.log("posts", location.state?.posts);
-    //     })()
-    
-    // }, []);
-    
-    // TODO: Style the posts
-    
-    // TODO: Add API request for getting Topics for the topics bar
-    const deleteAnnouncecment = (e, id)=>{
+
+    const deleteAnnouncecment = (e, id) => {
         e.preventDefault();
-        //verify
-        //call remove announcement endpoint
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token") || "undefined";
 
         if (!token || token == "undefined") {
             console.log("no token");
         } else {
+            // Make sure user is logged in
             fetch("/api/verify", {
                 method: "POST",
                 headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-                }
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                },
             })
-            .then((res) => {
-                if (res.status === 200) {
-                    res.json().then(data=>{
-                        if (data.role === "ADMIN"){
-                            fetch(`/api/announcements/${id}`, {
-                                method: "DELETE",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                }
-                            })
-                            .then(res=>{
-                                if (res.status === 200) {
-                                    navigate(0);
+                .then((res) => {
+                    if (res.status === 200) {
+                        // Check if user is admin
+                        res.json()
+                            .then((data) => {
+                                if (data.role === "ADMIN") {
+                                    // Delete the announcement
+                                    fetch(`/api/announcements/${id}`, {
+                                        method: "DELETE",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                    }).then((res) => {
+                                        if (res.status === 200) {
+                                            navigate(0); // refresh the page
+                                        } else {
+                                            setErrMessage(
+                                                "Error deleting announcement"
+                                            );
+                                            navigate("/error", {
+                                                replace: true,
+                                            });
+                                        }
+                                    });
                                 } else {
-                                    //go to error (server error)
+                                    setErrMessage(
+                                        "You do not have permission to delete announcements"
+                                    );
+                                    navigate("/error", { replace: true });
                                 }
                             })
-                        } else {
-                            //go to error (wrong role)
-                        }
-                    })
-                    .catch(err=>{console.log(err)});                    
-                } else {
-                    localStorage.removeItem("token"); // clear the token and need to prompt user to login again
-                    //go to error
-                }
-            })
-            .catch((err) => console.log(err));
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                    } else {
+                        localStorage.removeItem("token"); // clear the token and need to prompt user to login again
+                        setAppRole("NONE");
+                        setErrMessage(
+                            "You do not have permission to delete announcements"
+                        );
+                        navigate("/error", { replace: true });
+                    }
+                })
+                .catch((err) => console.log(err));
         }
-    }
+    };
 
     return (
         <>
-            
-            {props.posts ? (props.posts.map(post=>(
-                <>
-                <br />
-                <div className="card" key={post._id}>
-                    <div className="card-title bg-primary" >
-                        <h3 className="text-start ms-2 mt-2 " >{post.title}</h3>
-                    </div>
-                    <div className="card-body">
-                    <div className="text-start">Topic: {post.topic}</div>
-                    <div className="text-start">Posted at: {post.localDate}</div>
-                    <div className="text-start">Posted by: {post.author}</div>
-                    <hr />
-                    <p className="text-start">{post.message}</p>
-                    {props.appRole === "ADMIN" ? <><br /><button className="btn btn-primary" onClick={e=>{deleteAnnouncecment(e, post._id)}}>Delete Announcement</button></> : <></>}
-                    </div>
-                    
-                </div>
-                </>))
-
-            ):(<p>Loading posts</p>)}
+            {props.posts ? (
+                props.posts.map((post) => (
+                    <>
+                        <br />
+                        <div className="card" key={post._id}>
+                            <div className="card-title bg-primary">
+                                <h3 className="text-start ms-2 mt-2 ">
+                                    {post.title}
+                                </h3>
+                            </div>
+                            <div className="card-body">
+                                <div className="text-start">
+                                    Topic: {post.topic}
+                                </div>
+                                <div className="text-start">
+                                    Posted at: {post.localDate}
+                                </div>
+                                <div className="text-start">
+                                    Posted by: {post.author}
+                                </div>
+                                <hr />
+                                <p className="text-start">{post.message}</p>
+                                {props.appRole === "ADMIN" ? (
+                                    <>
+                                        <br />
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={(e) => {
+                                                deleteAnnouncecment(
+                                                    e,
+                                                    post._id
+                                                );
+                                            }}
+                                        >
+                                            Delete Announcement
+                                        </button>
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
+                            </div>
+                        </div>
+                    </>
+                ))
+            ) : (
+                <p>Loading posts</p>
+            )}
             <br />
         </>
     );
-}
+};
 export default Posts;

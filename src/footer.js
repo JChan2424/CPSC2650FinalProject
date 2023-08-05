@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-const Footer = props => {
-    let [year, setYear] = useState();
-    useEffect(() => {
-        let date = new Date();
-        setYear(date.getFullYear());
-    }, []);
-
+const Footer = (props) => {
     return (
         <>
-            <hr/>
+            <hr />
             <div className="h4 text-center">
                 <footer>
-                    <kbd> &copy; <span>{year}</span> Joshua Chan, Ashwin Charathsandran, Kieran Lee. All Rights Reserved.</kbd>
+                    <kbd>
+                        {" "}
+                        &copy; <span>{new Date().getFullYear()}</span> Joshua
+                        Chan, Ashwin Charathsandran, Kieran Lee. All Rights
+                        Reserved.
+                    </kbd>
                 </footer>
             </div>
         </>
     );
-}
+};
 export default Footer;

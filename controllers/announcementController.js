@@ -56,7 +56,7 @@ announcementController.get(
         let collection = client.db().collection("Announcements");
 
         // Log the requested ID
-        console.log("Requested: " + req.params.id);
+        // console.log("Requested: " + req.params.id);
 
         // Find the announcement with the requested ID and return it
         let announcement = await collection.findOne({
@@ -75,7 +75,7 @@ announcementController.get(
         let collection = client.db().collection("Announcements");
 
         // Log the requested topic
-        console.log("Requested: " + req.params.topic);
+        // console.log("Requested: " + req.params.topic);
 
         // Find all announcements with the requested topic and return them
         let announcement = await util.find(collection, {

@@ -1,11 +1,5 @@
 const React = require("react");
 
-// const App = require('../src/App')
-// const Login = require('../src/Login')
-// const Register = require('../src/Register')
-// const CreateAnnouncement = require('../src/CreateAnnouncement')
-// const Body = require('../src/body')
-
 import App from '../src/App';
 import Login from '../src/Login';
 import Register from '../src/Register';
