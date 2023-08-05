@@ -72,7 +72,7 @@ const Body = (props) => {
                                 </>
                             )}
                         </div>
-                        <div className="col card bg-primary d-sm-block">
+                        <div className="col-10 card bg-primary d-sm-block">
                             <div className="card-header bg-primary">
                                 <h3>Weather</h3>
                             </div>
