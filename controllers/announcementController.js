@@ -134,6 +134,12 @@ announcementController.delete(
         // Get the Announcements collection from MongoDB
         let collection = client.db().collection("Announcements");
 
+        // Check if the announcement exists before trying to delete it
+        let announcement = await collection.findOne({ _id: new ObjectId(req.params.id) });
+        if (!announcement) {
+            return res.status(404).json({ message: 'Announcement not found' });
+        }
+
         // Delete the announcement with the given ID and return the result
         let result = await util.deleteOne(collection, {
             _id: new ObjectId(req.params.id),
@@ -141,6 +147,7 @@ announcementController.delete(
         res.status(200).json(result);
     }
 );
+
 
 // Export the announcementController for use in other modules
 module.exports = announcementController;
