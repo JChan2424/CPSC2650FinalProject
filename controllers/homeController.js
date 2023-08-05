@@ -9,7 +9,7 @@ const options = {
 };
 
 homeController.get('/', util.logRequest, (req,res) => {
-    res.sendFile('index.html')
+    res.sendFile('index.html', options)
 })
 homeController.get('/index.html', util.logRequest, (req,res) => {
     res.sendFile('index.html', options)
@@ -24,6 +24,9 @@ homeController.get('/register',util.logRequest, (req,res) => {
     res.sendFile('/index.html', options)
 })
 homeController.get('/create-announcement',util.logRequest, (req,res) => {
+    res.sendFile('/index.html', options)
+})
+homeController.get('/error',util.logRequest, (req,res) => {
     res.sendFile('/index.html', options)
 })
 

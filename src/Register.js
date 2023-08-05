@@ -3,12 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 const { useState, useEffect } = React;
 const Register = props=>{
-    let [ username, setUsername ] = useState();
-    let [ password, setPassword ] = useState();
-    let [ confirmedPassword, setConfirmedPassword ] = useState();
-    let [ inviteCode, setInviteCode ] = useState();
-    let [ role, setRole ] = useState();
-    let navigate = useNavigate();
+    const [ username, setUsername ] = useState();
+    const [ password, setPassword ] = useState();
+    const [ confirmedPassword, setConfirmedPassword ] = useState();
+    const [ inviteCode, setInviteCode ] = useState();
+    const [ role, setRole ] = useState();
+    const [appRole, setAppRole, errMessage, setErrMessage] = useOutletContext();
+    const navigate = useNavigate();
 
     const submitRegister = (e)=>{
         e.preventDefault();
@@ -30,14 +31,13 @@ const Register = props=>{
         })
         .then(res => {
             console.log("register apicall status", res.status);
-            if (res.status === 400) {
-
+            if (res.status === 400 || res.status === 409) {
+                res.json().then(data=>{
+                    setErrMessage(data.message);
+                    navigate("/error", {replace: true});
+                });
                 //alert: invalid request, try again
 
-            }
-
-            if (res.status === 409) {
-                //alert: username already exists
             }
 
             if (res.status === 200) {
@@ -47,6 +47,8 @@ const Register = props=>{
         })
         .catch(err=>{
             console.log("register err", err);
+            setErrMessage("Unknown Error");
+            navigate("/error", {replace: true});
         });
     }
 

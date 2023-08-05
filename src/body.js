@@ -7,7 +7,7 @@ import Posts from "./posts";
 
 const Body = props => {
   let [ posts, setPosts ] = useState();
-  const [ appRole, setAppRole ] = useOutletContext();
+  const [ appRole, setAppRole, errMessage, setErrMessage ] = useOutletContext();
   const location = useLocation();
   const navigate = useNavigate();
   let searchStatus = location.state?.searchStatus;
@@ -61,7 +61,7 @@ const Body = props => {
       },[]);
       let goBackToAll = (event) => {
         event.preventDefault();
-        navigate("/announcements", {state:{searchStatus: false}, replace: true});
+        navigate("/view-announcements", {state:{searchStatus: false}, replace: true});
       }
       let getMostRecentPosts = async () => {
         let results = await fetch(`../api/announcements/last/:10`)

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Login = props=>{
     const [ username, setUsername ] = useState();
     const [ password, setPassword ] = useState();
-    const [ appRole, setAppRole] = useOutletContext();
+    const [appRole, setAppRole, errMessage, setErrMessage] = useOutletContext();
     const navigate = useNavigate();
     const location = useLocation();
     const testStateTwo=location.state?.test;
@@ -27,21 +27,23 @@ const Login = props=>{
             body: JSON.stringify(data)
         })
         .then(res=>{
-            if(res.status === 401) {
-
-            } else if (res.status === 402) {
-
+            if(res.status === 401 || res.status === 402) {
+                res.json().then(data=>{
+                    setErrMessage(data.message);
+                    navigate("/error", {replace: true});
+                });
             } else if(res.status === 200) {
                 res.json().then(data=>{
                     console.log(data);
-                localStorage.setItem("token", data.token);
-                setAppRole(data.role);
-                navigate("/view-announcements", {state: {posts: data.posts} , replace: true });
+                    localStorage.setItem("token", data.token);
+                    setAppRole(data.role);
+                    navigate("/view-announcements", {state: {posts: data.posts} , replace: true });
                 })
                 
 
             } else {
-
+                setErrMessage("unknown error");
+                navigate("/error", {replace: true});
             }
         })
         .catch(err=>console.log(err));

@@ -11,6 +11,7 @@ import Login from '../src/Login';
 import Register from '../src/Register';
 import CreateAnnouncement from '../src/CreateAnnouncement'
 import Body from '../src/body';
+import Error from '../src/Error'
 
 const routes = [
     {
@@ -32,6 +33,10 @@ const routes = [
             {
                 path: "/create-announcement",
                 Component()  {return <CreateAnnouncement />}
+            }, 
+            {
+                path: "/error",
+                Component() {return <Error />}
             }
 
         ]
