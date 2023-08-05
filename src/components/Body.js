@@ -44,7 +44,7 @@ const Body = (props) => {
                             <div
                                 className="card-body"
                                 aria-labelledby="topics-header"
-                                tabindex="0"
+                                tabIndex="0"
                             ></div>
                         </div>
                         <div
@@ -64,7 +64,7 @@ const Body = (props) => {
                                         posts={posts}
                                         appRole={appRole}
                                         aria-labelledby="recent-posts-header"
-                                        tabindex="0"
+                                        tabIndex="0"
                                     />
                                 </>
                             ) : (
@@ -79,7 +79,7 @@ const Body = (props) => {
                                         <Posts
                                             posts={searchedPosts}
                                             aria-labelledby="search-results-header"
-                                            tabindex="0"
+                                            tabIndex="0"
                                         />
                                     ) : (
                                         <>
@@ -92,7 +92,7 @@ const Body = (props) => {
                                         to={"/view-announcements"}
                                         className="btn btn-primary"
                                         aria-label="Go back to all posts"
-                                        tabindex="0"
+                                        tabIndex="0"
                                     >
                                         Go back to all posts
                                     </Link>
@@ -112,7 +112,7 @@ const Body = (props) => {
                             </div>
                             <Weather
                                 aria-labelledby="weather-header"
-                                tabindex="0"
+                                tabIndex="0"
                             />
                         </div>
                     </div>

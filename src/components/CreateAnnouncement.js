@@ -99,7 +99,7 @@ const CreateAnnouncement = (props) => {
                         onChange={(e) => setTopic(e.target.value)}
                         aria-label="Topic"
                         aria-required="true"
-                        tabindex="0"
+                        tabIndex="0"
                     ></input>
                 </label>
 
@@ -112,7 +112,7 @@ const CreateAnnouncement = (props) => {
                         onChange={(e) => setTitle(e.target.value)}
                         aria-label="Title"
                         aria-required="true"
-                        tabindex="0"
+                        tabIndex="0"
                     ></input>
                 </label>
 
@@ -124,14 +124,14 @@ const CreateAnnouncement = (props) => {
                         onChange={(e) => setMessage(e.target.value)}
                         aria-label="Content"
                         aria-required="true"
-                        tabindex="0"
+                        tabIndex="0"
                     ></textarea>
                 </label>
 
                 <button
                     className="btn btn-primary p-2 m-2"
                     aria-label="Submit new announcement"
-                    tabindex="0"
+                    tabIndex="0"
                 >
                     Submit
                 </button>

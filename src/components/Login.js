@@ -67,7 +67,7 @@ const Login = (props) => {
                         onChange={(e) => setUsername(e.target.value)}
                         aria-label="Enter username"
                         aria-required="true"
-                        tabindex="0"
+                        tabIndex="0"
                     ></input>
                 </label>
 
@@ -80,13 +80,13 @@ const Login = (props) => {
                         onChange={(e) => setPassword(e.target.value)}
                         aria-label="Enter password"
                         aria-required="true"
-                        tabindex="0"
+                        tabIndex="0"
                     ></input>
                 </label>
                 <button
                     className="btn btn-primary p-2 m-2"
                     aria-label="Submit Login"
-                    tabindex="0"
+                    tabIndex="0"
                 >
                     Submit
                 </button>
@@ -95,7 +95,7 @@ const Login = (props) => {
                 to={"/register"}
                 className="btn btn-primary m-2"
                 aria-label="No account? Sign up here."
-                tabindex="0"
+                tabIndex="0"
             >
                 No account? Sign up here.
             </Link>
