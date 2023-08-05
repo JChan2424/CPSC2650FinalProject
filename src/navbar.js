@@ -127,8 +127,9 @@ const Navbar = (props) => {
                   Langara Homepage
                 </a>
               </li>
+              {console.log(props.appRole)}
               <li className="nav-item">
-                {role != 'NONE' ? <a
+                {props.appRole != 'NONE' ? <a
                   className="nav-link active"
                   aria-current="page"
                   href="/"
