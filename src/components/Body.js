@@ -101,7 +101,7 @@ const Body = (props) => {
                             )}
                         </div>
                         <div
-                            className="col flex card bg-primary d-md-block"
+                            className="col card bg-primary d-md-block"
                             role="complementary"
                         >
                             <div
